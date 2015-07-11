@@ -86,41 +86,53 @@ class WC_Meta_Box_Product_Data {
 				<?php
 					$product_data_tabs = apply_filters( 'woocommerce_product_data_tabs', array(
 						'general' => array(
-							'label'  => __( 'General', 'woocommerce' ),
-							'target' => 'general_product_data',
-							'class'  => array( 'hide_if_grouped' ),
+							'label'    => __( 'General', 'woocommerce' ),
+							'target'   => 'general_product_data',
+							'class'    => array( 'hide_if_grouped' ),
+							'priority' => 10,
 						),
 						'inventory' => array(
-							'label'  => __( 'Inventory', 'woocommerce' ),
-							'target' => 'inventory_product_data',
-							'class'  => array( 'show_if_simple', 'show_if_variable', 'show_if_grouped' ),
+							'label'    => __( 'Inventory', 'woocommerce' ),
+							'target'   => 'inventory_product_data',
+							'class'    => array( 'show_if_simple', 'show_if_variable', 'show_if_grouped' ),
+							'priority' => 20,
 						),
 						'shipping' => array(
-							'label'  => __( 'Shipping', 'woocommerce' ),
-							'target' => 'shipping_product_data',
-							'class'  => array( 'hide_if_virtual', 'hide_if_grouped', 'hide_if_external' ),
+							'label'    => __( 'Shipping', 'woocommerce' ),
+							'target'   => 'shipping_product_data',
+							'class'    => array( 'hide_if_virtual', 'hide_if_grouped', 'hide_if_external' ),
+							'priority' => 30,
 						),
 						'linked_product' => array(
-							'label'  => __( 'Linked Products', 'woocommerce' ),
-							'target' => 'linked_product_data',
-							'class'  => array(),
+							'label'    => __( 'Linked Products', 'woocommerce' ),
+							'target'   => 'linked_product_data',
+							'class'    => array(),
+							'priority' => 40,
 						),
 						'attribute' => array(
-							'label'  => __( 'Attributes', 'woocommerce' ),
-							'target' => 'product_attributes',
-							'class'  => array(),
+							'label'    => __( 'Attributes', 'woocommerce' ),
+							'target'   => 'product_attributes',
+							'class'    => array(),
+							'priority' => 50,
 						),
 						'variations' => array(
-							'label'  => __( 'Variations', 'woocommerce' ),
-							'target' => 'variable_product_options',
-							'class'  => array( 'variations_tab', 'show_if_variable' ),
+							'label'    => __( 'Variations', 'woocommerce' ),
+							'target'   => 'variable_product_options',
+							'class'    => array( 'variations_tab', 'show_if_variable' ),
+							'priority' => 60,
 						),
 						'advanced' => array(
-							'label'  => __( 'Advanced', 'woocommerce' ),
-							'target' => 'advanced_product_data',
-							'class'  => array(),
+							'label'    => __( 'Advanced', 'woocommerce' ),
+							'target'   => 'advanced_product_data',
+							'class'    => array(),
+							'priority' => 70,
 						)
 					) );
+
+					function wc_order_product_data_tabs( $a, $b ) {
+						return isset( $a['priority'] ) && isset( $b['priority'] ) ? $a['priority'] - $b['priority'] : 1;
+					}
+					uasort( $product_data_tabs, 'wc_order_product_data_tabs' );
 
 					foreach ( $product_data_tabs as $key => $tab ) {
 						?><li class="<?php echo $key; ?>_options <?php echo $key; ?>_tab <?php echo implode( ' ' , $tab['class'] ); ?>">
