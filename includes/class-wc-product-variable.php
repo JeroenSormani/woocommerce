@@ -267,7 +267,7 @@ class WC_Product_Variable extends WC_Product {
 				$sale_price    = get_post_meta( $variation_id, '_sale_price', true );
 
 				// If sale price does not equal price, the product is not yet on sale
-				if ( $price != $sale_price ) {
+				if ( ! $variation->is_on_sale() ) {
 					$sale_price = $regular_price;
 				}
 
