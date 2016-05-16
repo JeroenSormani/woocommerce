@@ -79,7 +79,7 @@ class WC_Widget_Price_Filter extends WC_Widget {
 			$fields .= '<input type="hidden" name="post_type" value="' . esc_attr( $_GET['post_type'] ) . '" />';
 		}
 
-		if ( ! empty ( $_GET['product_cat'] ) ) {
+		if ( ! empty( $_GET['product_cat'] ) ) {
 			$fields .= '<input type="hidden" name="product_cat" value="' . esc_attr( $_GET['product_cat'] ) . '" />';
 		}
 
