@@ -47,7 +47,6 @@ class WC_CLI_Coupon extends WC_CLI_Command {
 	 * ## EXAMPLES
 	 *
 	 *     wp wc coupon create --code=new-coupon --type=percent
-	 *
 	 */
 	public function create( $__, $assoc_args ) {
 		global $wpdb;
@@ -165,7 +164,6 @@ class WC_CLI_Coupon extends WC_CLI_Command {
 	 *     wp wc coupon delete 123
 	 *
 	 *     wp wc coupon delete $(wp wc coupon list --format=ids)
-	 *
 	 */
 	public function delete( $args, $assoc_args ) {
 		$exit_code = 0;
