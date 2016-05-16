@@ -44,7 +44,7 @@ class WC_Background_Updater extends WP_Background_Process {
 	 * in the next pass through. Or, return false to remove the
 	 * item from the queue.
 	 *
-	 * @param string $callback Update callback function
+	 * @param  string $callback Update callback function
 	 * @return mixed
 	 */
 	protected function task( $callback ) {
@@ -80,4 +80,5 @@ class WC_Background_Updater extends WP_Background_Process {
 		WC_Install::update_db_version();
 		parent::complete();
 	}
+
 }
