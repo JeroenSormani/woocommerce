@@ -65,7 +65,7 @@ class WC_Admin_Permalink_Settings {
 	public function product_category_slug_input() {
 		$permalinks = get_option( 'woocommerce_permalinks' );
 		?>
-		<input name="woocommerce_product_category_slug" type="text" class="regular-text code" value="<?php if ( isset( $permalinks['category_base'] ) ) echo esc_attr( $permalinks['category_base'] ); ?>" placeholder="<?php echo esc_attr_x('product-category', 'slug', 'woocommerce') ?>" />
+		<input name="woocommerce_product_category_slug" type="text" class="regular-text code" value="<?php if ( isset( $permalinks['category_base'] ) ) echo esc_attr( $permalinks['category_base'] ); ?>" placeholder="<?php echo esc_attr_x( 'product-category', 'slug', 'woocommerce' ); ?>" />
 		<?php
 	}
 
@@ -75,7 +75,7 @@ class WC_Admin_Permalink_Settings {
 	public function product_tag_slug_input() {
 		$permalinks = get_option( 'woocommerce_permalinks' );
 		?>
-		<input name="woocommerce_product_tag_slug" type="text" class="regular-text code" value="<?php if ( isset( $permalinks['tag_base'] ) ) echo esc_attr( $permalinks['tag_base'] ); ?>" placeholder="<?php echo esc_attr_x('product-tag', 'slug', 'woocommerce') ?>" />
+		<input name="woocommerce_product_tag_slug" type="text" class="regular-text code" value="<?php if ( isset( $permalinks['tag_base'] ) ) echo esc_attr( $permalinks['tag_base'] ); ?>" placeholder="<?php echo esc_attr_x( 'product-tag', 'slug', 'woocommerce' ); ?>" />
 		<?php
 	}
 
@@ -99,9 +99,9 @@ class WC_Admin_Permalink_Settings {
 		$product_permalink = isset( $permalinks['product_base'] ) ? $permalinks['product_base'] : '';
 
 		// Get shop page
-		$shop_page_id   = wc_get_page_id( 'shop' );
-		$base_slug      = urldecode( ( $shop_page_id > 0 && get_post( $shop_page_id ) ) ? get_page_uri( $shop_page_id ) : _x( 'shop', 'default-slug', 'woocommerce' ) );
-		$product_base   = _x( 'product', 'default-slug', 'woocommerce' );
+		$shop_page_id = wc_get_page_id( 'shop' );
+		$base_slug    = urldecode( ( $shop_page_id > 0 && get_post( $shop_page_id ) ) ? get_page_uri( $shop_page_id ) : _x( 'shop', 'default-slug', 'woocommerce' ) );
+		$product_base = _x( 'product', 'default-slug', 'woocommerce' );
 
 		$structures = array(
 			0 => '',
@@ -163,7 +163,6 @@ class WC_Admin_Permalink_Settings {
 	 * Save the settings.
 	 */
 	public function settings_save() {
-
 		if ( ! is_admin() ) {
 			return;
 		}
@@ -180,9 +179,9 @@ class WC_Admin_Permalink_Settings {
 				$permalinks = array();
 			}
 
-			$permalinks['category_base']    = untrailingslashit( $woocommerce_product_category_slug );
-			$permalinks['tag_base']         = untrailingslashit( $woocommerce_product_tag_slug );
-			$permalinks['attribute_base']   = untrailingslashit( $woocommerce_product_attribute_slug );
+			$permalinks['category_base']  = untrailingslashit( $woocommerce_product_category_slug );
+			$permalinks['tag_base']       = untrailingslashit( $woocommerce_product_tag_slug );
+			$permalinks['attribute_base'] = untrailingslashit( $woocommerce_product_attribute_slug );
 
 			// Product base
 			$product_permalink = wc_clean( $_POST['product_permalink'] );
@@ -215,6 +214,7 @@ class WC_Admin_Permalink_Settings {
 			update_option( 'woocommerce_permalinks', $permalinks );
 		}
 	}
+
 }
 
 endif;
