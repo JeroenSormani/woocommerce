@@ -24,7 +24,7 @@ class WC_Widget_Product_Tag_Cloud extends WC_Widget {
 		$this->widget_id          = 'woocommerce_product_tag_cloud';
 		$this->widget_name        = __( 'WooCommerce Product Tags', 'woocommerce' );
 		$this->settings           = array(
-			'title'  => array(
+			'title' => array(
 				'type'  => 'text',
 				'std'   => __( 'Product Tags', 'woocommerce' ),
 				'label' => __( 'Title', 'woocommerce' )
@@ -46,7 +46,7 @@ class WC_Widget_Product_Tag_Cloud extends WC_Widget {
 		$current_taxonomy = $this->_get_current_taxonomy( $instance );
 
 		if ( empty( $instance['title'] ) ) {
-			$taxonomy = get_taxonomy( $current_taxonomy );
+			$taxonomy          = get_taxonomy( $current_taxonomy );
 			$instance['title'] = $taxonomy->labels->name;
 		}
 
@@ -70,4 +70,5 @@ class WC_Widget_Product_Tag_Cloud extends WC_Widget {
 	public function _get_current_taxonomy( $instance ) {
 		return 'product_tag';
 	}
+
 }
