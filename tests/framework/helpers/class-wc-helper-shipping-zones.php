@@ -12,7 +12,7 @@ class WC_Helper_Shipping_Zones {
      */
     public static function create_mock_zones() {
         self::remove_mock_zones();
-        
+
         // Local zone
         $zone = new WC_Shipping_Zone();
         $zone->set_zone_name( 'Local' );
