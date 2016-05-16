@@ -76,7 +76,7 @@ wc_print_notices(); ?>
 							<?php elseif ( 'download-actions' === $column_id ) : ?>
 								<?php
 									$actions = array(
-										'download'  => array(
+										'download' => array(
 											'url'  => $download['download_url'],
 											'name' => __( 'Download', 'woocommerce' )
 										)
