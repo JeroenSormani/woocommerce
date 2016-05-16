@@ -30,4 +30,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 <?php else : ?>
 	<div class="updated woocommerce-message inline"><p><?php _e( 'There are currently no logs to view.', 'woocommerce' ); ?></p></div>
-<?php endif; ?>
+<?php endif;
