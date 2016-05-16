@@ -31,8 +31,8 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 	 *
 	 * @see WP_Widget->update
 	 *
-	 * @param array $new_instance
-	 * @param array $old_instance
+	 * @param  array $new_instance
+	 * @param  array $old_instance
 	 *
 	 * @return array
 	 */
@@ -69,12 +69,12 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 		}
 
 		$this->settings = array(
-			'title' => array(
+			'title'        => array(
 				'type'  => 'text',
 				'std'   => __( 'Filter by', 'woocommerce' ),
 				'label' => __( 'Title', 'woocommerce' )
 			),
-			'attribute' => array(
+			'attribute'    => array(
 				'type'    => 'select',
 				'std'     => '',
 				'label'   => __( 'Attribute', 'woocommerce' ),
@@ -89,7 +89,7 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 					'dropdown' => __( 'Dropdown', 'woocommerce' )
 				)
 			),
-			'query_type' => array(
+			'query_type'   => array(
 				'type'    => 'select',
 				'std'     => 'and',
 				'label'   => __( 'Query type', 'woocommerce' ),
@@ -198,10 +198,10 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 
 	/**
 	 * Show dropdown layered nav.
-	 * @param  array $terms
+	 * @param  array  $terms
 	 * @param  string $taxonomy
 	 * @param  string $query_type
-	 * @return bool Will nav display?
+	 * @return bool               Will nav display?
 	 */
 	protected function layered_nav_dropdown( $terms, $taxonomy, $query_type ) {
 		$found = false;
@@ -222,9 +222,9 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 				}
 
 				// Get count based on current view
-				$current_values    = isset( $_chosen_attributes[ $taxonomy ]['terms'] ) ? $_chosen_attributes[ $taxonomy ]['terms'] : array();
-				$option_is_set     = in_array( $term->slug, $current_values );
-				$count             = isset( $term_counts[ $term->term_id ] ) ? $term_counts[ $term->term_id ] : 0;
+				$current_values = isset( $_chosen_attributes[ $taxonomy ]['terms'] ) ? $_chosen_attributes[ $taxonomy ]['terms'] : array();
+				$option_is_set  = in_array( $term->slug, $current_values );
+				$count          = isset( $term_counts[ $term->term_id ] ) ? $term_counts[ $term->term_id ] : 0;
 
 				// Only show options with count > 0
 				if ( 0 < $count ) {
@@ -239,9 +239,9 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 			echo '</select>';
 
 			wc_enqueue_js( "
-				jQuery( '.dropdown_layered_nav_". esc_js( $taxonomy_filter_name ) . "' ).change( function() {
+				jQuery( '.dropdown_layered_nav_" . esc_js( $taxonomy_filter_name ) . "' ).change( function() {
 					var slug = jQuery( this ).val();
-					location.href = '" . preg_replace( '%\/page\/[0-9]+%', '', str_replace( array( '&amp;', '%2C' ), array( '&', ',' ), esc_js( add_query_arg( 'filtering', '1', remove_query_arg( array( 'page', 'filter_' . $taxonomy_filter_name ) ) ) ) ) ) . "&filter_". esc_js( $taxonomy_filter_name ) . "=' + slug;
+					location.href = '" . preg_replace( '%\/page\/[0-9]+%', '', str_replace( array( '&amp;', '%2C' ), array( '&', ',' ), esc_js( add_query_arg( 'filtering', '1', remove_query_arg( array( 'page', 'filter_' . $taxonomy_filter_name ) ) ) ) ) ) . '&filter_' . esc_js( $taxonomy_filter_name ) . "=' + slug;
 				});
 			" );
 		}
@@ -256,10 +256,10 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 	protected function get_page_base_url( $taxonomy ) {
 		if ( defined( 'SHOP_IS_ON_FRONT' ) ) {
 			$link = home_url();
-		} elseif ( is_post_type_archive( 'product' ) || is_page( wc_get_page_id('shop') ) ) {
+		} elseif ( is_post_type_archive( 'product' ) || is_page( wc_get_page_id( 'shop' ) ) ) {
 			$link = get_post_type_archive_link( 'product' );
 		} else {
-			$link = get_term_link( get_query_var('term'), get_query_var('taxonomy') );
+			$link = get_term_link( get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 		}
 
 		// Min/Max
@@ -315,7 +315,7 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 
 	/**
 	 * Count products within certain terms, taking the main WP query into consideration.
-	 * @param  array $term_ids
+	 * @param  array  $term_ids
 	 * @param  string $taxonomy
 	 * @param  string $query_type
 	 * @return array
@@ -339,15 +339,15 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 		$meta_query_sql = $meta_query->get_sql( 'post', $wpdb->posts, 'ID' );
 		$tax_query_sql  = $tax_query->get_sql( $wpdb->posts, 'ID' );
 
-		$sql  = "
+		$sql = "
 			SELECT COUNT( {$wpdb->posts}.ID ) as term_count, term_count_relationships.term_taxonomy_id as term_count_id FROM {$wpdb->posts}
 			INNER JOIN {$wpdb->term_relationships} AS term_count_relationships ON ({$wpdb->posts}.ID = term_count_relationships.object_id)
 			" . $tax_query_sql['join'] . $meta_query_sql['join'] . "
 			WHERE {$wpdb->posts}.post_type = 'product' AND {$wpdb->posts}.post_status = 'publish'
-			" . $tax_query_sql['where'] . $meta_query_sql['where'] . "
-			AND term_count_relationships.term_taxonomy_id IN (" . implode( ',', array_map( 'absint', $term_ids ) ) . ")
+			" . $tax_query_sql['where'] . $meta_query_sql['where'] . '
+			AND term_count_relationships.term_taxonomy_id IN (' . implode( ',', array_map( 'absint', $term_ids ) ) . ')
 			GROUP BY term_count_relationships.term_taxonomy_id;
-		";
+		';
 
 		$results = $wpdb->get_results( $sql );
 
@@ -356,10 +356,10 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 
 	/**
 	 * Show list based layered nav.
-	 * @param  array $terms
+	 * @param  array  $terms
 	 * @param  string $taxonomy
 	 * @param  string $query_type
-	 * @return bool Will nav display?
+	 * @return bool               Will nav display?
 	 */
 	protected function layered_nav_list( $terms, $taxonomy, $query_type ) {
 		// List display
@@ -370,9 +370,9 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 		$found              = false;
 
 		foreach ( $terms as $term ) {
-			$current_values    = isset( $_chosen_attributes[ $taxonomy ]['terms'] ) ? $_chosen_attributes[ $taxonomy ]['terms'] : array();
-			$option_is_set     = in_array( $term->slug, $current_values );
-			$count             = isset( $term_counts[ $term->term_id ] ) ? $term_counts[ $term->term_id ] : 0;
+			$current_values = isset( $_chosen_attributes[ $taxonomy ]['terms'] ) ? $_chosen_attributes[ $taxonomy ]['terms'] : array();
+			$option_is_set  = in_array( $term->slug, $current_values );
+			$count          = isset( $term_counts[ $term->term_id ] ) ? $term_counts[ $term->term_id ] : 0;
 
 			// skip the term for the current archive
 			if ( $this->get_current_term_id() === $term->term_id ) {
@@ -433,4 +433,5 @@ class WC_Widget_Layered_Nav extends WC_Widget {
 
 		return $found;
 	}
+
 }
