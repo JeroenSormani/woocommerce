@@ -14,7 +14,6 @@ class WC_Tests_Cart_Functions extends WC_Unit_Test_Case {
 	 * @return string
 	 */
 	private function get_checkout_url() {
-
 		// Get the checkout URL
 		$checkout_page_id = wc_get_page_id( 'checkout' );
 
@@ -44,7 +43,6 @@ class WC_Tests_Cart_Functions extends WC_Unit_Test_Case {
 	 * @since 2.5.0
 	 */
 	public function test_get_checkout_url_regular() {
-
 		// Get the original setting
 		$o_setting = get_option( 'woocommerce_force_ssl_checkout' );
 
@@ -55,7 +53,6 @@ class WC_Tests_Cart_Functions extends WC_Unit_Test_Case {
 
 		// Restore option
 		update_option( 'woocommerce_force_ssl_checkout', $o_setting );
-
 	}
 
 	/**
@@ -64,7 +61,6 @@ class WC_Tests_Cart_Functions extends WC_Unit_Test_Case {
 	 * @since 2.5.0
 	 */
 	public function test_get_checkout_url_ssl() {
-
 		// Get the original setting
 		$o_setting = get_option( 'woocommerce_force_ssl_checkout' );
 
@@ -75,7 +71,6 @@ class WC_Tests_Cart_Functions extends WC_Unit_Test_Case {
 
 		// Restore option
 		update_option( 'woocommerce_force_ssl_checkout', $o_setting );
-
 	}
 
 	/**
@@ -150,4 +145,5 @@ class WC_Tests_Cart_Functions extends WC_Unit_Test_Case {
 
 		$this->assertEquals( apply_filters( 'woocommerce_get_cart_url', $cart_page_url ? $cart_page_url : '' ), wc_get_cart_url() );
 	}
+
 }
