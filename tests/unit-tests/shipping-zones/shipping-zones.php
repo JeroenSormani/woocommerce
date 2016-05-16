@@ -25,8 +25,8 @@ class WC_Tests_Shipping_Zones extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone
-	 */
+     * Test: WC_Shipping_Zones::get_zone
+     */
     public function test_get_zone() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -43,8 +43,8 @@ class WC_Tests_Shipping_Zones extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone_by
-	 */
+     * Test: WC_Shipping_Zones::get_zone_by
+     */
     public function test_get_zone_by() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -70,8 +70,8 @@ class WC_Tests_Shipping_Zones extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_shipping_method
-	 */
+     * Test: WC_Shipping_Zones::get_shipping_method
+     */
     public function test_get_shipping_method() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -89,8 +89,8 @@ class WC_Tests_Shipping_Zones extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::delete_zone
-	 */
+     * Test: WC_Shipping_Zones::delete_zone
+     */
     public function test_delete_zone() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -107,8 +107,8 @@ class WC_Tests_Shipping_Zones extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone_matching_package
-	 */
+     * Test: WC_Shipping_Zones::get_zone_matching_package
+     */
     public function test_get_zone_matching_package() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
