@@ -505,7 +505,6 @@ abstract class WC_REST_Posts_Controller extends WC_REST_Controller {
 				 * The dynamic portion of the hook name, $var, refers to the query_var key.
 				 *
 				 * @param mixed $prepared_args[ $var ] The query_var value.
-				 *
 				 */
 				$query_args[ $var ] = apply_filters( "woocommerce_rest_query_var-{$var}", $prepared_args[ $var ] );
 			}
