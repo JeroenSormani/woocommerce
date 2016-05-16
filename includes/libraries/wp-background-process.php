@@ -54,9 +54,9 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		/**
 		 * Push to queue
 		 *
-		 * @param mixed $data
+		 * @param  mixed $data
 		 *
-		 * @return $this
+		 * @return       $this
 		 */
 		public function push_to_queue( $data ) {
 			$this->data[] = $data;
@@ -82,10 +82,10 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		/**
 		 * Update queue
 		 *
-		 * @param string $key
-		 * @param array  $data
+		 * @param  string $key
+		 * @param  array  $data
 		 *
-		 * @return $this
+		 * @return        $this
 		 */
 		public function update( $key, $data ) {
 			if ( ! empty( $data ) ) {
@@ -98,9 +98,9 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		/**
 		 * Delete queue
 		 *
-		 * @param string $key
+		 * @param  string $key
 		 *
-		 * @return $this
+		 * @return        $this
 		 */
 		public function delete( $key ) {
 			delete_site_option( $key );
@@ -114,7 +114,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		 * Generates a unique key based on microtime. Queue items are
 		 * given a unique key so that they can be merged upon save.
 		 *
-		 * @param int $length
+		 * @param  int    $length
 		 *
 		 * @return string
 		 */
@@ -378,7 +378,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		/**
 		 * Schedule cron healthcheck
 		 *
-		 * @param $schedules
+		 * @param        $schedules
 		 *
 		 * @return mixed
 		 */
@@ -449,7 +449,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		 * in the next pass through. Or, return false to remove the
 		 * item from the queue.
 		 *
-		 * @param mixed $item Queue item to iterate over
+		 * @param  mixed $item Queue item to iterate over
 		 *
 		 * @return mixed
 		 */

@@ -27,7 +27,6 @@ class WC_Embed {
 	 * @since 2.4.11
 	 */
 	public static function init() {
-
 		// Filter all of the content that's going to be embedded.
 		add_filter( 'the_excerpt_embed', array( __CLASS__, 'the_excerpt' ), 10 );
 
@@ -58,7 +57,7 @@ class WC_Embed {
 	 * Create the excerpt for embedded products - we want to add the buy button to it.
 	 *
 	 * @since 2.4.11
-	 * @param string $excerpt Embed short description.
+	 * @param  string $excerpt Embed short description.
 	 * @return string
 	 */
 	public static function the_excerpt( $excerpt ) {
@@ -156,6 +155,7 @@ class WC_Embed {
 		</style>
 		<?php
 	}
+
 }
 
 WC_Embed::init();

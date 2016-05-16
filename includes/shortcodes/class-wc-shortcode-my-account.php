@@ -14,7 +14,7 @@ class WC_Shortcode_My_Account {
 	/**
 	 * Get the shortcode content.
 	 *
-	 * @param array $atts
+	 * @param  array  $atts
 	 * @return string
 	 */
 	public static function get( $atts ) {
@@ -46,7 +46,7 @@ class WC_Shortcode_My_Account {
 			} else {
 				wc_get_template( 'myaccount/form-login.php' );
 			}
-	 	} else {
+		} else {
 			// See if showing an account endpoint
 			foreach ( $wp->query_vars as $key => $value ) {
 				// Ignore pagename param.
@@ -71,7 +71,7 @@ class WC_Shortcode_My_Account {
 	 */
 	private static function my_account( $atts ) {
 		extract( shortcode_atts( array(
-	    	'order_count' => 15 // @deprecated 2.6.0. Keep for backward compatibility.
+			'order_count' => 15 // @deprecated 2.6.0. Keep for backward compatibility.
 		), $atts ) );
 
 		wc_get_template( 'myaccount/my-account.php', array(
@@ -86,12 +86,11 @@ class WC_Shortcode_My_Account {
 	 * @param int $order_id
 	 */
 	public static function view_order( $order_id ) {
-
 		$user_id = get_current_user_id();
 		$order   = wc_get_order( $order_id );
 
 		if ( ! current_user_can( 'view_order', $order_id ) ) {
-			echo '<div class="woocommerce-error">' . __( 'Invalid order.', 'woocommerce' ) . ' <a href="' . wc_get_page_permalink( 'myaccount' ).'" class="wc-forward">'. __( 'My Account', 'woocommerce' ) .'</a>' . '</div>';
+			echo '<div class="woocommerce-error">' . __( 'Invalid order.', 'woocommerce' ) . ' <a href="' . wc_get_page_permalink( 'myaccount' ) . '" class="wc-forward">' . __( 'My Account', 'woocommerce' ) . '</a>' . '</div>';
 			return;
 		}
 
@@ -100,10 +99,10 @@ class WC_Shortcode_My_Account {
 		$status->name = wc_get_order_status_name( $order->get_status() );
 
 		wc_get_template( 'myaccount/view-order.php', array(
-	        'status'    => $status, // @deprecated 2.2
-	        'order'     => wc_get_order( $order_id ),
-	        'order_id'  => $order_id
-	    ) );
+			'status'   => $status, // @deprecated 2.2
+			'order'    => wc_get_order( $order_id ),
+			'order_id' => $order_id
+		) );
 	}
 
 	/**
@@ -134,7 +133,7 @@ class WC_Shortcode_My_Account {
 			$value = get_user_meta( get_current_user_id(), $key, true );
 
 			if ( ! $value ) {
-				switch( $key ) {
+				switch ( $key ) {
 					case 'billing_email' :
 					case 'shipping_email' :
 						$value = $current_user->user_email;
@@ -154,8 +153,8 @@ class WC_Shortcode_My_Account {
 		}
 
 		wc_get_template( 'myaccount/form-edit-address.php', array(
-			'load_address' 	=> $load_address,
-			'address'		=> apply_filters( 'woocommerce_address_to_edit', $address )
+			'load_address' => $load_address,
+			'address'      => apply_filters( 'woocommerce_address_to_edit', $address )
 		) );
 	}
 
@@ -181,19 +180,19 @@ class WC_Shortcode_My_Account {
 		/**
 		 * After sending the reset link, don't show the form again.
 		 */
-	 	} elseif ( ! empty( $_GET['reset-link-sent'] ) ) {
+		} elseif ( ! empty( $_GET['reset-link-sent'] ) ) {
 			return wc_get_template( 'myaccount/lost-password-confirmation.php' );
 
 		/**
 		 * After reset, show confirmation message.
 		 */
-	 	} elseif ( ! empty( $_GET['reset'] ) ) {
+		} elseif ( ! empty( $_GET['reset'] ) ) {
 			wc_add_notice( __( 'Your password has been reset.', 'woocommerce' ) . ' <a class="button" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '">' . __( 'Log in', 'woocommerce' ) . '</a>' );
 		}
 
 		// Show lost password form by default
 		wc_get_template( 'myaccount/form-lost-password.php', array(
-			'form'  => 'lost_password',
+			'form' => 'lost_password',
 		) );
 	}
 
@@ -281,9 +280,9 @@ class WC_Shortcode_My_Account {
 	 *
 	 * @uses $wpdb WordPress Database object
 	 *
-	 * @param string $key Hash to validate sending user's password
-	 * @param string $login The user login
-	 * @return WP_USER|bool User's database row on success, false for invalid keys
+	 * @param  string       $key   Hash to validate sending user's password
+	 * @param  string       $login The user login
+	 * @return WP_USER|bool        User's database row on success, false for invalid keys
 	 */
 	public static function check_password_reset_key( $key, $login ) {
 		global $wpdb, $wp_hasher;
@@ -322,7 +321,7 @@ class WC_Shortcode_My_Account {
 	/**
 	 * Handles resetting the user's password.
 	 *
-	 * @param object $user The user
+	 * @param object $user     The user
 	 * @param string $new_pass New password for the user in plaintext
 	 */
 	public static function reset_password( $user, $new_pass ) {
@@ -337,7 +336,6 @@ class WC_Shortcode_My_Account {
 	 * Show the add payment method page.
 	 */
 	public static function add_payment_method() {
-
 		if ( ! is_user_logged_in() ) {
 
 			wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
@@ -354,14 +352,13 @@ class WC_Shortcode_My_Account {
 			do_action( 'after_woocommerce_add_payment_method' );
 
 		}
-
 	}
 
 	/**
 	 * Deletes a payment method from a users list and displays a message to the user
 	 *
 	 * @since  2.6
-	 * @param  int $id  Payment Token ID
+	 * @param int $id Payment Token ID
 	 */
 	public static function delete_payment_method( $id ) {
 		$token = WC_Payment_Tokens::get( $id );
@@ -393,7 +390,7 @@ class WC_Shortcode_My_Account {
 	 * Sets a payment method as default and displays a message to the user
 	 *
 	 * @since  2.6
-	 * @param  int $id  Payment Token ID
+	 * @param int $id Payment Token ID
 	 */
 	public static function set_default_payment_method( $id ) {
 		$token = WC_Payment_Tokens::get( $id );

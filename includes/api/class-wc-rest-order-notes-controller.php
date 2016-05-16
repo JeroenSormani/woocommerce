@@ -87,7 +87,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Check whether a given request has permission to read order notes.
 	 *
-	 * @param  WP_REST_Request $request Full details about the request.
+	 * @param  WP_REST_Request  $request Full details about the request.
 	 * @return WP_Error|boolean
 	 */
 	public function get_items_permissions_check( $request ) {
@@ -115,7 +115,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Check if a given request has access to read a order note.
 	 *
-	 * @param  WP_REST_Request $request Full details about the request.
+	 * @param  WP_REST_Request  $request Full details about the request.
 	 * @return WP_Error|boolean
 	 */
 	public function get_item_permissions_check( $request ) {
@@ -147,7 +147,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Get order notes from an order.
 	 *
-	 * @param WP_REST_Request $request
+	 * @param  WP_REST_Request $request
 	 * @return array
 	 */
 	public function get_items( $request ) {
@@ -183,7 +183,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Create a single order note.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
+	 * @param  WP_REST_Request           $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function create_item( $request ) {
@@ -212,9 +212,9 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 		/**
 		 * Fires after a order note is created or updated via the REST API.
 		 *
-		 * @param WP_Comment      $note      New order note object.
-		 * @param WP_REST_Request $request   Request object.
-		 * @param boolean         $creating  True when creating item, false when updating.
+		 * @param WP_Comment      $note     New order note object.
+		 * @param WP_REST_Request $request  Request object.
+		 * @param boolean         $creating True when creating item, false when updating.
 		 */
 		do_action( 'woocommerce_rest_insert_order_note', $note, $request, true );
 
@@ -230,7 +230,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Get a single order note.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
+	 * @param  WP_REST_Request           $request Full details about the request.
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function get_item( $request ) {
@@ -256,7 +256,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Delete a single order note.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
+	 * @param  WP_REST_Request           $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function delete_item( $request ) {
@@ -283,7 +283,7 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 		$request->set_param( 'context', 'edit' );
 		$response = $this->prepare_item_for_response( $note, $request );
 
-		$result = wp_delete_comment( $note->comment_ID, true );;
+		$result = wp_delete_comment( $note->comment_ID, true );
 
 		if ( ! $result ) {
 			return new WP_Error( 'woocommerce_rest_cannot_delete', sprintf( __( 'The %s cannot be deleted.', 'woocommerce' ), 'order_note' ), array( 'status' => 500 ) );
@@ -304,8 +304,8 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Prepare a single order note output for response.
 	 *
-	 * @param WP_Comment $note Order note object.
-	 * @param WP_REST_Request $request Request object.
+	 * @param  WP_Comment       $note     Order note object.
+	 * @param  WP_REST_Request  $request  Request object.
 	 * @return WP_REST_Response $response Response data.
 	 */
 	public function prepare_item_for_response( $note, $request ) {
@@ -338,20 +338,20 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 	/**
 	 * Prepare links for the request.
 	 *
-	 * @param WP_Comment $note Delivery order_note object.
-	 * @return array Links for the given order note.
+	 * @param  WP_Comment $note Delivery order_note object.
+	 * @return array            Links for the given order note.
 	 */
 	protected function prepare_links( $note ) {
 		$order_id = (int) $note->comment_post_ID;
 		$base     = str_replace( '(?P<order_id>[\d]+)', $order_id, $this->rest_base );
 		$links    = array(
-			'self' => array(
+			'self'       => array(
 				'href' => rest_url( sprintf( '/%s/%s/%d', $this->namespace, $base, $note->comment_ID ) ),
 			),
 			'collection' => array(
 				'href' => rest_url( sprintf( '/%s/%s', $this->namespace, $base ) ),
 			),
-			'up' => array(
+			'up'         => array(
 				'href' => rest_url( sprintf( '/%s/orders/%d', $this->namespace, $order_id ) ),
 			),
 		);
@@ -370,19 +370,19 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 			'title'      => 'tax',
 			'type'       => 'order_note',
 			'properties' => array(
-				'id' => array(
+				'id'            => array(
 					'description' => __( 'Unique identifier for the resource.', 'woocommerce' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
-				'date_created' => array(
+				'date_created'  => array(
 					'description' => __( "The date the order note was created, in the site's timezone.", 'woocommerce' ),
 					'type'        => 'date-time',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
-				'note' => array(
+				'note'          => array(
 					'description' => __( 'Order note.', 'woocommerce' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
@@ -409,4 +409,5 @@ class WC_REST_Order_Notes_Controller extends WC_REST_Controller {
 			'context' => $this->get_context_param( array( 'default' => 'view' ) ),
 		);
 	}
+
 }

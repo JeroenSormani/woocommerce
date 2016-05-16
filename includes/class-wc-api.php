@@ -73,7 +73,7 @@ class WC_API {
 	 * Add new query vars.
 	 *
 	 * @since 2.0
-	 * @param array $vars
+	 * @param  array    $vars
 	 * @return string[]
 	 */
 	public function add_query_vars( $vars ) {
@@ -90,7 +90,6 @@ class WC_API {
 	 * @since 2.0
 	 */
 	public static function add_endpoint() {
-
 		// REST API, deprecated since 2.6.0.
 		add_rewrite_rule( '^wc-api/v([1-3]{1})/?$', 'index.php?wc-api-version=$matches[1]&wc-api-route=/', 'top' );
 		add_rewrite_rule( '^wc-api/v([1-3]{1})(.*)?', 'index.php?wc-api-version=$matches[1]&wc-api-route=$matches[2]', 'top' );
@@ -98,7 +97,6 @@ class WC_API {
 		// WC API for payment gateway IPNs, etc.
 		add_rewrite_endpoint( 'wc-api', EP_ALL );
 	}
-
 
 	/**
 	 * Handle REST API requests.
@@ -126,7 +124,7 @@ class WC_API {
 			// Legacy v1 API request.
 			if ( 1 === WC_API_REQUEST_VERSION ) {
 				$this->handle_v1_rest_api_request();
-			} else if ( 2 === WC_API_REQUEST_VERSION ) {
+			} elseif ( 2 === WC_API_REQUEST_VERSION ) {
 				$this->handle_v2_rest_api_request();
 			} else {
 				$this->includes();
@@ -151,7 +149,6 @@ class WC_API {
 	 * @deprecated 2.6.0
 	 */
 	public function includes() {
-
 		// API server / response handlers.
 		include_once( 'api/legacy/v3/class-wc-api-exception.php' );
 		include_once( 'api/legacy/v3/class-wc-api-server.php' );
@@ -183,7 +180,6 @@ class WC_API {
 	 * @param WC_API_Server $server the REST server
 	 */
 	public function register_resources( $server ) {
-
 		$api_classes = apply_filters( 'woocommerce_api_classes',
 			array(
 				'WC_API_Coupons',
@@ -201,7 +197,6 @@ class WC_API {
 		}
 	}
 
-
 	/**
 	 * Handle legacy v1 REST API requests.
 	 *
@@ -209,7 +204,6 @@ class WC_API {
 	 * @deprecated 2.6.0
 	 */
 	private function handle_v1_rest_api_request() {
-
 		// Include legacy required files for v1 REST API request.
 		include_once( 'api/legacy/v1/class-wc-api-server.php' );
 		include_once( 'api/legacy/v1/interface-wc-api-handler.php' );
@@ -437,6 +431,7 @@ class WC_API {
 			$this->$controller->register_routes();
 		}
 	}
+
 }
 
 endif;

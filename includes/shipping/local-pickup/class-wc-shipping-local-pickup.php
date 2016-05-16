@@ -19,11 +19,11 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 	 * Constructor.
 	 */
 	public function __construct( $instance_id = 0 ) {
-		$this->id                    = 'local_pickup';
-		$this->instance_id 			 = absint( $instance_id );
-		$this->method_title          = __( 'Local Pickup', 'woocommerce' );
-		$this->method_description    = __( 'Allow customers to pick up orders themselves. By default, when using local pickup store base taxes will apply regardless of customer address.', 'woocommerce' );
-		$this->supports              = array(
+		$this->id                 = 'local_pickup';
+		$this->instance_id        = absint( $instance_id );
+		$this->method_title       = __( 'Local Pickup', 'woocommerce' );
+		$this->method_description = __( 'Allow customers to pick up orders themselves. By default, when using local pickup store base taxes will apply regardless of customer address.', 'woocommerce' );
+		$this->supports           = array(
 			'shipping-zones',
 			'instance-settings',
 			'instance-settings-modal',
@@ -35,16 +35,15 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 	 * Initialize local pickup.
 	 */
 	public function init() {
-
 		// Load the settings.
 		$this->init_form_fields();
 		$this->init_settings();
 
 		// Define user set variables
-		$this->title		= $this->get_option( 'title' );
-		$this->codes		= $this->get_option( 'codes' );
-		$this->availability	= $this->get_option( 'availability' );
-		$this->countries	= $this->get_option( 'countries' );
+		$this->title        = $this->get_option( 'title' );
+		$this->codes        = $this->get_option( 'codes' );
+		$this->availability = $this->get_option( 'availability' );
+		$this->countries    = $this->get_option( 'countries' );
 
 		// Actions
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -56,8 +55,8 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 	 */
 	public function calculate_shipping( $package = array() ) {
 		$this->add_rate( array(
-			'label' 	 => $this->title,
-			'package'    => $package,
+			'label'   => $this->title,
+			'package' => $package,
 		) );
 	}
 
@@ -84,7 +83,7 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 		$codes = array();
 
 		if ( $this->codes != '' ) {
-			foreach( explode( ',', $this->codes ) as $code ) {
+			foreach ( explode( ',', $this->codes ) as $code ) {
 				$codes[] = strtoupper( trim( $code ) );
 			}
 		}
@@ -94,8 +93,8 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 
 	/**
 	 * See if a given postcode matches valid postcodes.
-	 * @param  string postcode
-	 * @param  string country code
+	 * @param  string  postcode
+	 * @param  string  country code
 	 * @return boolean
 	 */
 	public function is_valid_postcode( $postcode, $country ) {
@@ -132,7 +131,7 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 	/**
 	 * See if the method is available.
 	 *
-	 * @param array $package
+	 * @param  array $package
 	 * @return bool
 	 */
 	public function is_available( $package ) {
@@ -160,10 +159,11 @@ class WC_Shipping_Local_Pickup extends WC_Shipping_Method {
 	 * Clean code string.
 	 *
 	 * @access public
-	 * @param mixed $code
+	 * @param  mixed  $code
 	 * @return string
 	 */
 	public function clean( $code ) {
 		return str_replace( '-', '', sanitize_title( $code ) ) . ( strstr( $code, '*' ) ? '*' : '' );
 	}
+
 }

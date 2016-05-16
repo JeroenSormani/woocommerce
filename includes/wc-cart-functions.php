@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Prevent password protected products being added to the cart.
  *
  * @param  bool $passed
- * @param  int $product_id
+ * @param  int  $product_id
  * @return bool
  */
 function wc_protected_product_add_to_cart( $passed, $product_id ) {
@@ -43,7 +43,7 @@ function wc_empty_cart() {
 /**
  * Load the persistent cart.
  *
- * @param string $user_login
+ * @param string  $user_login
  * @param WP_User $user
  * @deprecated 2.3
  */
@@ -62,7 +62,7 @@ function wc_load_persistent_cart( $user_login, $user ) {
  *
  * @access public
  * @param int|array $products
- * @param bool $show_qty Should qty's be shown? Added in 2.6.0
+ * @param bool      $show_qty Should qty's be shown? Added in 2.6.0
  */
 function wc_add_to_cart_message( $products, $show_qty = false ) {
 	$titles = array();
@@ -78,8 +78,8 @@ function wc_add_to_cart_message( $products, $show_qty = false ) {
 	}
 
 	foreach ( $products as $product_id => $qty ) {
-		$titles[] = ( $qty > 1 ? absint( $qty ) . ' &times; ' : '' ) . sprintf( _x( '&ldquo;%s&rdquo;', 'Item name in quotes', 'woocommerce' ), strip_tags( get_the_title( $product_id ) ) );
-		$count += $qty;
+		$titles[]  = ( $qty > 1 ? absint( $qty ) . ' &times; ' : '' ) . sprintf( _x( '&ldquo;%s&rdquo;', 'Item name in quotes', 'woocommerce' ), strip_tags( get_the_title( $product_id ) ) );
+		$count    += $qty;
 	}
 
 	$titles     = array_filter( $titles );
@@ -90,7 +90,7 @@ function wc_add_to_cart_message( $products, $show_qty = false ) {
 		$return_to = apply_filters( 'woocommerce_continue_shopping_redirect', wp_get_referer() ? wp_get_referer() : home_url() );
 		$message   = sprintf( '<a href="%s" class="button wc-forward">%s</a> %s', esc_url( $return_to ), esc_html__( 'Continue Shopping', 'woocommerce' ), esc_html( $added_text ) );
 	} else {
-		$message   = sprintf( '<a href="%s" class="button wc-forward">%s</a> %s', esc_url( wc_get_page_permalink( 'cart' ) ), esc_html__( 'View Cart', 'woocommerce' ), esc_html( $added_text ) );
+		$message = sprintf( '<a href="%s" class="button wc-forward">%s</a> %s', esc_url( wc_get_page_permalink( 'cart' ) ), esc_html__( 'View Cart', 'woocommerce' ), esc_html( $added_text ) );
 	}
 
 	wc_add_notice( apply_filters( 'wc_add_to_cart_message', $message, $product_id ) );
@@ -98,7 +98,7 @@ function wc_add_to_cart_message( $products, $show_qty = false ) {
 
 /**
  * Comma separate a list of item names, and replace final comma with 'and'
- * @param  array $items
+ * @param  array  $items
  * @return string
  */
 function wc_format_list_of_items( $items ) {
@@ -206,7 +206,7 @@ function wc_cart_totals_taxes_total_html() {
  *
  * @access public
  * @param string $coupon
- * @param bool $echo or return
+ * @param bool   $echo   or return
  */
 function wc_cart_totals_coupon_label( $coupon, $echo = true ) {
 	if ( is_string( $coupon ) ) {
@@ -233,7 +233,7 @@ function wc_cart_totals_coupon_html( $coupon ) {
 		$coupon = new WC_Coupon( $coupon );
 	}
 
-	$value  = array();
+	$value = array();
 
 	if ( $amount = WC()->cart->get_coupon_discount_amount( $coupon->code, WC()->cart->display_cart_ex_tax ) ) {
 		$discount_html = '-' . wc_price( $amount );
@@ -267,18 +267,19 @@ function wc_cart_totals_order_total_html() {
 		$tax_string_array = array();
 
 		if ( get_option( 'woocommerce_tax_total_display' ) == 'itemized' ) {
-			foreach ( WC()->cart->get_tax_totals() as $code => $tax )
+			foreach ( WC()->cart->get_tax_totals() as $code => $tax ) {
 				$tax_string_array[] = sprintf( '%s %s', $tax->formatted_amount, $tax->label );
+			}
 		} else {
 			$tax_string_array[] = sprintf( '%s %s', wc_price( WC()->cart->get_taxes_total( true, true ) ), WC()->countries->tax_or_vat() );
 		}
 
 		if ( ! empty( $tax_string_array ) ) {
-			$taxable_address = WC()->customer->get_taxable_address();
-			$estimated_text  = WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping()
+			$taxable_address  = WC()->customer->get_taxable_address();
+			$estimated_text   = WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping()
 				? sprintf( ' ' . __( 'estimated for %s', 'woocommerce' ), WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] )
 				: '';
-			$value .= '<small class="includes_tax">' . sprintf( __( '(includes %s)', 'woocommerce' ), implode( ', ', $tax_string_array ) . $estimated_text ) . '</small>';
+			$value           .= '<small class="includes_tax">' . sprintf( __( '(includes %s)', 'woocommerce' ), implode( ', ', $tax_string_array ) . $estimated_text ) . '</small>';
 		}
 	}
 
@@ -325,7 +326,7 @@ function wc_cart_totals_shipping_method_label( $method ) {
  * Round discount.
  *
  * @param  float $value
- * @param  int $precision
+ * @param  int   $precision
  * @return float
  */
 function wc_cart_round_discount( $value, $precision ) {

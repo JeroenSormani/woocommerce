@@ -44,8 +44,8 @@ class WC_Shipping_Rate {
 	 *
 	 * @param string $id
 	 * @param string $label
-	 * @param float $cost
-	 * @param array $taxes
+	 * @param float  $cost
+	 * @param array  $taxes
 	 * @param string $method_id
 	 */
 	public function __construct( $id = '', $label = '', $cost = 0, $taxes = array(), $method_id = '' ) {
@@ -93,4 +93,5 @@ class WC_Shipping_Rate {
 	public function get_meta_data() {
 		return $this->meta_data;
 	}
+
 }

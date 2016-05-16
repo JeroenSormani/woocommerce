@@ -89,10 +89,10 @@ class WC_Shipping {
 		}
 	}
 
-    /**
-     * Initialize shipping.
-     */
-    public function init() {
+	/**
+	 * Initialize shipping.
+	 */
+	public function init() {
 		do_action( 'woocommerce_shipping_init' );
 	}
 
@@ -127,7 +127,7 @@ class WC_Shipping {
 	 * Loads all shipping methods which are hooked in.
 	 * If a $package is passed some methods may add themselves conditionally and zones will be used.
 	 *
-	 * @param array $package
+	 * @param  array $package
 	 * @return array
 	 */
 	public function load_shipping_methods( $package = array() ) {
@@ -201,7 +201,7 @@ class WC_Shipping {
 
 	/**
 	 * Get the default method.
-	 * @param  array  $available_methods
+	 * @param  array   $available_methods
 	 * @param  boolean $current_chosen_method
 	 * @return string
 	 */
@@ -265,8 +265,8 @@ class WC_Shipping {
 
 		// Get chosen methods for each package
 		foreach ( $this->packages as $i => $package ) {
-			$chosen_method    = false;
-			$method_count     = false;
+			$chosen_method = false;
+			$method_count  = false;
 
 			if ( ! empty( $chosen_methods[ $i ] ) ) {
 				$chosen_method = $chosen_methods[ $i ];
@@ -295,7 +295,7 @@ class WC_Shipping {
 
 					if ( ! empty( $rate->taxes ) && is_array( $rate->taxes ) ) {
 						foreach ( array_keys( $this->shipping_taxes + $rate->taxes ) as $key ) {
-							$this->shipping_taxes[ $key ] = ( isset( $rate->taxes[$key] ) ? $rate->taxes[$key] : 0 ) + ( isset( $this->shipping_taxes[$key] ) ? $this->shipping_taxes[$key] : 0 );
+							$this->shipping_taxes[ $key ] = ( isset( $rate->taxes[ $key ] ) ? $rate->taxes[ $key ] : 0 ) + ( isset( $this->shipping_taxes[ $key ] ) ? $this->shipping_taxes[ $key ] : 0 );
 						}
 					}
 				}
@@ -312,8 +312,8 @@ class WC_Shipping {
 	 *
 	 * Calculates each shipping methods cost. Rates are stored in the session based on the package hash to avoid re-calculation every page load.
 	 *
-	 * @param array $package cart items
-	 * @param int   $package_key Index of the package being calculated. Used to cache multiple package rates.
+	 * @param  array $package     cart items
+	 * @param  int   $package_key Index of the package being calculated. Used to cache multiple package rates.
 	 * @return array
 	 */
 	public function calculate_shipping_for_package( $package = array(), $package_key = 0 ) {
@@ -370,7 +370,7 @@ class WC_Shipping {
 		unset( WC()->session->chosen_shipping_methods );
 		$this->shipping_total = null;
 		$this->shipping_taxes = array();
-		$this->packages = array();
+		$this->packages       = array();
 	}
 
 	/**
@@ -380,4 +380,5 @@ class WC_Shipping {
 		_deprecated_function( 'sort_shipping_methods', '2.6', '' );
 		return $this->shipping_methods;
 	}
+
 }

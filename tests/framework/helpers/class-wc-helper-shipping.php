@@ -35,4 +35,5 @@ class WC_Helper_Shipping {
 		delete_option( 'woocommerce_flat_rate_settings' );
 		delete_option( 'woocommerce_flat_rate' );
 	}
+
 }

@@ -41,7 +41,7 @@ abstract class WC_REST_Controller extends WP_REST_Controller {
 	/**
 	 * Check batch limit.
 	 *
-	 * @param array $items Request items.
+	 * @param  array         $items Request items.
 	 * @return bool|WP_Error
 	 */
 	protected function check_batch_limit( $items ) {
@@ -70,8 +70,8 @@ abstract class WC_REST_Controller extends WP_REST_Controller {
 	/**
 	 * Bulk create, update and delete items.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return array Of WP_Error or WP_REST_Response.
+	 * @param  WP_REST_Request $request Full details about the request.
+	 * @return array                    Of WP_Error or WP_REST_Response.
 	 */
 	public function batch_items( $request ) {
 		/** @var WP_REST_Server $wp_rest_server */
@@ -172,4 +172,5 @@ abstract class WC_REST_Controller extends WP_REST_Controller {
 
 		return $schema;
 	}
+
 }
