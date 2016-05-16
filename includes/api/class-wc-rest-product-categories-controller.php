@@ -46,8 +46,8 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 	/**
 	 * Prepare a single product category output for response.
 	 *
-	 * @param WP_Term $item Term object.
-	 * @param WP_REST_Request $request
+	 * @param  WP_Term          $item     Term object.
+	 * @param  WP_REST_Request  $request
 	 * @return WP_REST_Response $response
 	 */
 	public function prepare_item_for_response( $item, $request ) {
@@ -88,9 +88,9 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 		 *
 		 * Allows modification of the term data right before it is returned.
 		 *
-		 * @param WP_REST_Response  $response  The response object.
-		 * @param object            $item      The original term object.
-		 * @param WP_REST_Request   $request   Request used to generate the response.
+		 * @param WP_REST_Response $response The response object.
+		 * @param object           $item     The original term object.
+		 * @param WP_REST_Request  $request  Request used to generate the response.
 		 */
 		return apply_filters( "woocommerce_rest_prepare_{$this->taxonomy}", $response, $item, $request );
 	}
@@ -98,8 +98,8 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 	/**
 	 * Update term meta fields.
 	 *
-	 * @param WP_Term $term
-	 * @param WP_REST_Request $request
+	 * @param  WP_Term         $term
+	 * @param  WP_REST_Request $request
 	 * @return bool|WP_Error
 	 */
 	protected function update_term_meta_fields( $term, $request ) {
@@ -133,17 +133,17 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 	 */
 	public function get_item_schema() {
 		$schema = array(
-			'$schema'              => 'http://json-schema.org/draft-04/schema#',
-			'title'                => $this->taxonomy,
-			'type'                 => 'object',
-			'properties'           => array(
-				'id' => array(
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => $this->taxonomy,
+			'type'       => 'object',
+			'properties' => array(
+				'id'          => array(
 					'description' => __( 'Unique identifier for the resource.', 'woocommerce' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 					'readonly'    => true,
 				),
-				'name' => array(
+				'name'        => array(
 					'description' => __( 'Category name.', 'woocommerce' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
@@ -151,7 +151,7 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 						'sanitize_callback' => 'sanitize_text_field',
 					),
 				),
-				'slug' => array(
+				'slug'        => array(
 					'description' => __( 'An alphanumeric identifier for the resource unique to its type.', 'woocommerce' ),
 					'type'        => 'string',
 					'context'     => array( 'view', 'edit' ),
@@ -159,7 +159,7 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 						'sanitize_callback' => 'sanitize_title',
 					),
 				),
-				'parent' => array(
+				'parent'      => array(
 					'description' => __( 'The id for the parent of the resource.', 'woocommerce' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
@@ -172,25 +172,25 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 						'sanitize_callback' => 'wp_filter_post_kses',
 					),
 				),
-				'display' => array(
+				'display'     => array(
 					'description' => __( 'Category archive display type.', 'woocommerce' ),
 					'type'        => 'string',
 					'default'     => 'default',
 					'enum'        => array( 'default', 'products', 'subcategories', 'both' ),
 					'context'     => array( 'view', 'edit' ),
 				),
-				'image' => array(
+				'image'       => array(
 					'description' => __( 'Image URL.', 'woocommerce' ),
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => array( 'view', 'edit' ),
 				),
-				'menu_order' => array(
+				'menu_order'  => array(
 					'description' => __( 'Menu order, used to custom sort the resource.', 'woocommerce' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
 				),
-				'count' => array(
+				'count'       => array(
 					'description' => __( 'Number of published products for the resource.', 'woocommerce' ),
 					'type'        => 'integer',
 					'context'     => array( 'view', 'edit' ),
@@ -201,4 +201,5 @@ class WC_REST_Product_Categories_Controller extends WC_REST_Terms_Controller {
 
 		return $this->add_additional_fields_schema( $schema );
 	}
+
 }
