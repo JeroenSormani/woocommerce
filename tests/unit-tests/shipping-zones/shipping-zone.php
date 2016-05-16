@@ -25,8 +25,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone_id
-	 */
+     * Test: WC_Shipping_Zones::get_zone_id
+     */
     public function test_get_zone_id() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -42,8 +42,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone_name
-	 */
+     * Test: WC_Shipping_Zones::get_zone_name
+     */
     public function test_get_zone_name() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -59,8 +59,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone_order
-	 */
+     * Test: WC_Shipping_Zones::get_zone_order
+     */
     public function test_get_zone_order() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -76,8 +76,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_zone_locations
-	 */
+     * Test: WC_Shipping_Zones::get_zone_locations
+     */
     public function test_get_zone_locations() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -94,8 +94,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zones::get_formatted_location
-	 */
+     * Test: WC_Shipping_Zones::get_formatted_location
+     */
     public function test_get_formatted_location() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -129,8 +129,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
     }
 
     /**
-	 * Test: WC_Shipping_Zone::get_shipping_methods
-	 */
+     * Test: WC_Shipping_Zone::get_shipping_methods
+     */
 	public function test_get_shipping_methods() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -149,8 +149,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::set_zone_name
-	 */
+     * Test: WC_Shipping_Zone::set_zone_name
+     */
 	public function test_set_zone_name() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -167,8 +167,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::set_zone_order
-	 */
+     * Test: WC_Shipping_Zone::set_zone_order
+     */
 	public function test_set_zone_order() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -185,8 +185,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::is_valid_location_type
-	 */
+     * Test: WC_Shipping_Zone::is_valid_location_type
+     */
 	public function test_is_valid_location_type() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -202,8 +202,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::add_location
-	 */
+     * Test: WC_Shipping_Zone::add_location
+     */
 	public function test_add_location() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -223,8 +223,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::clear_locations
-	 */
+     * Test: WC_Shipping_Zone::clear_locations
+     */
 	public function test_clear_locations() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -242,8 +242,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::set_locations
-	 */
+     * Test: WC_Shipping_Zone::set_locations
+     */
 	public function test_set_locations() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -279,8 +279,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::save
-	 */
+     * Test: WC_Shipping_Zone::save
+     */
 	public function test_save() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
@@ -299,8 +299,8 @@ class WC_Tests_Shipping_Zone extends WC_Unit_Test_Case {
 	}
 
     /**
-	 * Test: WC_Shipping_Zone::add_shipping_method
-	 */
+     * Test: WC_Shipping_Zone::add_shipping_method
+     */
 	public function test_add_shipping_method() {
         // Setup
         WC_Helper_Shipping_Zones::create_mock_zones();
