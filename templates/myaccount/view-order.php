@@ -30,7 +30,7 @@ wc_print_notices(); ?>
 	<p><?php
 		printf(
 			__( 'Order #%1$s was placed on %2$s and is currently %3$s.', 'woocommerce' ),
-			'<mark class="order-number">' . $order->get_order_number() . '</mark>', 
+			'<mark class="order-number">' . $order->get_order_number() . '</mark>',
 			'<mark class="order-date">' . date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ) . '</mark>',
 			'<mark class="order-status">' . wc_get_order_status_name( $order->get_status() ) . '</mark>'
 		);
