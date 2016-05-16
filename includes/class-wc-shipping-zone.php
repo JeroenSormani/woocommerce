@@ -61,8 +61,8 @@ class WC_Shipping_Zone extends WC_Data {
     }
 
 	/**
-     * Insert zone into the database
-     */
+	 * Insert zone into the database
+	 */
     public function create() {
 		global $wpdb;
 		$wpdb->insert( $wpdb->prefix . 'woocommerce_shipping_zones', array(
