@@ -199,7 +199,7 @@ class WC_Admin_Help {
 				'<p>' . __( 'If you would like to learn about using WooCommerce from an expert, consider following a WooCommerce course ran by one of our educational partners.', 'woocommerce' ) . '</p>' .
 				'<p><a href="' . 'http://www.woothemes.com/educational-partners/?utm_source=WooCommercePlugin&utm_medium=Help&utm_content=EduPartners&utm_campaign=Onboarding' . '" class="button button-primary">' . __( 'View Education Partners', 'woocommerce' ) . '</a></p>'
 		) );
-		
+
 		$screen->add_help_tab( array(
 			'id'        => 'woocommerce_onboard_tab',
 			'title'     => __( 'Setup Wizard', 'woocommerce' ),
