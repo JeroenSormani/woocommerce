@@ -160,9 +160,9 @@ if ( ! function_exists( 'is_account_page' ) ) {
 if ( ! function_exists( 'is_view_order_page' ) ) {
 
 	/**
-	* is_view_order_page - Returns true when on the view order page.
-	* @return bool
-	*/
+	 * is_view_order_page - Returns true when on the view order page.
+	 * @return bool
+	 */
 	function is_view_order_page() {
 		global $wp;
 
@@ -173,12 +173,12 @@ if ( ! function_exists( 'is_view_order_page' ) ) {
 if ( ! function_exists( 'is_edit_account_page' ) ) {
 
 	/**
-	* Check for edit account page.
-	* Returns true when viewing the edit account page.
-	*
-	* @since 2.5.1
-	* @return bool
-	*/
+	 * Check for edit account page.
+	 * Returns true when viewing the edit account page.
+	 *
+	 * @since 2.5.1
+	 * @return bool
+	 */
 	function is_edit_account_page() {
 		global $wp;
 
@@ -189,9 +189,9 @@ if ( ! function_exists( 'is_edit_account_page' ) ) {
 if ( ! function_exists( 'is_order_received_page' ) ) {
 
 	/**
-	* is_order_received_page - Returns true when viewing the order received page.
-	* @return bool
-	*/
+	 * is_order_received_page - Returns true when viewing the order received page.
+	 * @return bool
+	 */
 	function is_order_received_page() {
 		global $wp;
 
@@ -202,9 +202,9 @@ if ( ! function_exists( 'is_order_received_page' ) ) {
 if ( ! function_exists( 'is_add_payment_method_page' ) ) {
 
 	/**
-	* is_add_payment_method_page - Returns true when viewing the add payment method page.
-	* @return bool
-	*/
+	 * is_add_payment_method_page - Returns true when viewing the add payment method page.
+	 * @return bool
+	 */
 	function is_add_payment_method_page() {
 		global $wp;
 
@@ -215,9 +215,9 @@ if ( ! function_exists( 'is_add_payment_method_page' ) ) {
 if ( ! function_exists( 'is_lost_password_page' ) ) {
 
 	/**
-	* is_lost_password_page - Returns true when viewing the lost password page.
-	* @return bool
-	*/
+	 * is_lost_password_page - Returns true when viewing the lost password page.
+	 * @return bool
+	 */
 	function is_lost_password_page() {
 		global $wp;
 
@@ -277,9 +277,9 @@ if ( ! function_exists( 'meta_is_product_attribute' ) ) {
 
 	/**
 	 * Returns true when the passed meta name is a product attribute.
-	 * @param  string $name of the attribute
+	 * @param  string $name       of the attribute
 	 * @param  string $value
-	 * @param  int $product_id
+	 * @param  int    $product_id
 	 * @return bool
 	 */
 	function meta_is_product_attribute( $name, $value, $product_id ) {
@@ -335,10 +335,9 @@ if ( ! function_exists( 'wc_prices_include_tax' ) ) {
  * + it has a valid resource & event.
  *
  * @param  string $topic webhook topic
- * @return bool true if valid, false otherwise
+ * @return bool          true if valid, false otherwise
  */
 function wc_is_webhook_valid_topic( $topic ) {
-
 	// Custom topics are prefixed with woocommerce_ or wc_ are valid
 	if ( 0 === strpos( $topic, 'action.woocommerce_' ) || 0 === strpos( $topic, 'action.wc_' ) ) {
 		return true;
@@ -367,7 +366,6 @@ function wc_is_webhook_valid_topic( $topic ) {
  * @return bool
  */
 function wc_is_valid_url( $url ) {
-
 	// Must start with http:// or https://
 	if ( 0 !== strpos( $url, 'http://' ) && 0 !== strpos( $url, 'https://' ) ) {
 		return false;
