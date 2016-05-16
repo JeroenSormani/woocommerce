@@ -100,7 +100,6 @@ class WC_Emails {
 
 	/**
 	 * Constructor for the email class hooks in all emails that can be sent.
-	 *
 	 */
 	public function __construct() {
 		$this->init();
