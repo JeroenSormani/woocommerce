@@ -28,7 +28,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * @since 2.3
 	 */
 	public function test_add_to_cart_simple() {
-
 		// Create dummy product
 		$product = WC_Helper_Product::create_simple_product();
 
@@ -122,7 +121,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * @since 2.3
 	 */
 	public function test_find_product_in_cart() {
-
 		// Create dummy product
 		$product = WC_Helper_Product::create_simple_product();
 
@@ -140,7 +138,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 
 		// Clean up product
 		WC_Helper_Product::delete_product( $product->id );
-
 	}
 
 	/**
@@ -149,7 +146,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * @since 2.3
 	 */
 	public function test_generate_cart_id() {
-
 		// Setup data
 		$product_id     = 1;
 		$variation_id   = 2;
@@ -196,7 +192,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 
 		// Assert
 		$this->assertEquals( $manual_cart_id, WC()->cart->generate_cart_id( $product_id, $variation_id, array( 'Testing' => 'yup' ), $cart_item_data ) );
-
 	}
 
 	/**
@@ -239,7 +234,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * @since 2.3
 	 */
 	public function test_check_cart_item_validity() {
-
 		// Create dummy product
 		$product = WC_Helper_Product::create_simple_product();
 
@@ -254,7 +248,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 
 		// Clean up product
 		WC_Helper_Product::delete_product( $product->id );
-
 	}
 
 	/**
@@ -263,7 +256,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * @since 2.3
 	 */
 	public function test_get_total() {
-
 		// Create dummy product
 		$product = WC_Helper_Product::create_simple_product();
 
@@ -291,7 +283,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * @since 2.3
 	 */
 	public function test_get_total_ex_tax() {
-
 		// Set calc taxes option
 		update_option( 'woocommerce_calc_taxes', 'yes' );
 
@@ -423,7 +414,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 	 * Test cart coupons.
 	 */
 	public function test_get_coupons() {
-
 		// Create coupon
 		$coupon = WC_Helper_Coupon::create_coupon();
 
@@ -440,7 +430,6 @@ class WC_Tests_Cart extends WC_Unit_Test_Case {
 
 		// Delete coupon
 		WC_Helper_Coupon::delete_coupon( $coupon->id );
-
 	}
 
 }
