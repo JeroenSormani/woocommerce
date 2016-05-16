@@ -51,4 +51,5 @@ class WC_Tests_Account_Functions extends WC_Unit_Test_Case {
 			'download-actions'   => '&nbsp;',
 		), wc_get_account_downloads_columns() );
 	}
+
 }
