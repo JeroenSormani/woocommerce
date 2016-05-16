@@ -121,7 +121,7 @@ wc_get_template( 'myaccount/navigation.php' ); ?>
 	<?php else : ?>
 		<div class="woocommerce-Message woocommerce-Message--info woocommerce-info">
 			<a class="woocommerce-Button button" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>">
-				<?php _e( 'Go Shop', 'woocommerce' ) ?>
+				<?php _e( 'Go Shop', 'woocommerce' ); ?>
 			</a>
 			<?php _e( 'No order has been made yet.', 'woocommerce' ); ?>
 		</div>
