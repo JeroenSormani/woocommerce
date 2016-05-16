@@ -36,4 +36,4 @@ wc_print_notices();
 			<?php _e( 'Return To Shop', 'woocommerce' ) ?>
 		</a>
 	</p>
-<?php endif; ?>
+<?php endif;
