@@ -52,7 +52,7 @@ wc_print_notices(); ?>
 								if ( has_action( 'woocommerce_account_payment_methods_column_' . $column_id ) ) {
 									do_action( 'woocommerce_account_payment_methods_column_' . $column_id, $method );
 								} else if ( 'method' === $column_id ) {
-									if ( ! empty ( $method['method']['last4'] ) ) {
+									if ( ! empty( $method['method']['last4'] ) ) {
 										echo sprintf( __( '%s ending in %s', 'woocommerce' ), esc_html( wc_get_credit_card_type_label( $method['method']['brand'] ) ), esc_html( $method['method']['last4'] ) );
 									} else {
 										echo esc_html( wc_get_credit_card_type_label( $method['method']['brand'] ) );

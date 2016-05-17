@@ -133,7 +133,7 @@ if ( ! class_exists( 'WC_Eval_Math' ) ) {
 						$op = '*'; $index--; // it's an implicit multiplication
 					}
 					// heart of the algorithm:
-					while ( $stack->count > 0 and ( $o2 = $stack->last() ) and in_array( $o2, $ops ) and ( $ops_r[$op] ? $ops_p[$op] < $ops_p[$o2] : $ops_p[$op] <= $ops_p[$o2] ) ) {
+					while ( $stack->count > 0 and( $o2 = $stack->last() ) and in_array( $o2, $ops ) and( $ops_r[$op] ? $ops_p[$op] < $ops_p[$o2] : $ops_p[$op] <= $ops_p[$o2] ) ) {
 						$output[] = $stack->pop(); // pop stuff off the stack into the output
 					}
 					// many thanks: http://en.wikipedia.org/wiki/Reverse_Polish_notation#The_algorithm_in_detail

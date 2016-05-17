@@ -39,7 +39,7 @@ abstract class WC_Session {
 		$this->set( $key, $value );
 	}
 
-	 /**
+	/**
 	 * __isset function.
 	 *
 	 * @param mixed $key

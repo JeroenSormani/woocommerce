@@ -346,7 +346,6 @@ if ( ! function_exists( 'woocommerce_content' ) ) {
 	 * This function is only used in the optional 'woocommerce.php' template.
 	 * which people can add to their themes to add basic woocommerce support.
 	 * without hooks or modifying core templates.
-	 *
 	 */
 	function woocommerce_content() {
 
@@ -402,7 +401,6 @@ if ( ! function_exists( 'woocommerce_output_content_wrapper' ) ) {
 
 	/**
 	 * Output the start of the page wrapper.
-	 *
 	 */
 	function woocommerce_output_content_wrapper() {
 		wc_get_template( 'global/wrapper-start.php' );
@@ -412,7 +410,6 @@ if ( ! function_exists( 'woocommerce_output_content_wrapper_end' ) ) {
 
 	/**
 	 * Output the end of the page wrapper.
-	 *
 	 */
 	function woocommerce_output_content_wrapper_end() {
 		wc_get_template( 'global/wrapper-end.php' );
@@ -423,7 +420,6 @@ if ( ! function_exists( 'woocommerce_get_sidebar' ) ) {
 
 	/**
 	 * Get the shop sidebar template.
-	 *
 	 */
 	function woocommerce_get_sidebar() {
 		wc_get_template( 'global/sidebar.php' );
@@ -434,7 +430,6 @@ if ( ! function_exists( 'woocommerce_demo_store' ) ) {
 
 	/**
 	 * Adds a demo store banner to the site if enabled.
-	 *
 	 */
 	function woocommerce_demo_store() {
 		if ( ! is_store_notice_showing() ) {

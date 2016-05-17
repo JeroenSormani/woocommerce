@@ -170,7 +170,7 @@ class WC_Webhook {
 			}
 		}
 
-		/*
+		/**
 		 * Let other plugins intercept deliver for some messages queue like rabbit/zeromq
 		 */
 		return apply_filters( 'woocommerce_webhook_should_deliver', $should_deliver, $this, $arg );

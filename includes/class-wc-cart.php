@@ -363,10 +363,10 @@ class WC_Cart {
 		}
 
 		/**
-		* Checks if the cart is empty.
-		*
-		* @return bool
-		*/
+		 * Checks if the cart is empty.
+		 *
+		 * @return bool
+		 */
 		public function is_empty() {
 			return 0 === sizeof( $this->get_cart() );
 		}
@@ -1174,10 +1174,10 @@ class WC_Cart {
 					/**
 					 * ADJUST TAX - Calculations when base tax is not equal to the item tax.
 					 *
- 					 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
- 					 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
- 					 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
- 					 */
+					 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
+					 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
+					 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
+					 */
 					if ( $item_tax_rates !== $base_tax_rates && apply_filters( 'woocommerce_adjust_non_base_location_prices', true ) ) {
 
 						// Work out a new base price without the shop's base tax
@@ -1268,10 +1268,10 @@ class WC_Cart {
 					/**
 					 * ADJUST TAX - Calculations when base tax is not equal to the item tax.
 					 *
- 					 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
- 					 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
- 					 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
- 					 */
+					 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
+					 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
+					 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
+					 */
 					if ( $item_tax_rates !== $base_tax_rates && apply_filters( 'woocommerce_adjust_non_base_location_prices', true ) ) {
 
 						// Work out a new base price without the shop's base tax
@@ -2271,7 +2271,7 @@ class WC_Cart {
 
 		/**
 		 * Function to apply cart discounts after tax.
- 		 * @deprecated Coupons can not be applied after tax
+		 * @deprecated Coupons can not be applied after tax
 		 */
 		public function apply_cart_discounts_after_tax( $values, $price ) {
 			_deprecated_function( 'apply_cart_discounts_after_tax', '2.3' );

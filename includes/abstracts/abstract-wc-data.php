@@ -4,15 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
-* Abstract WC Data Class
-*
-* Implemented by classes using the same CRUD(s) pattern.
-*
-* @version  2.6.0
-* @package  WooCommerce/Abstracts
-* @category Abstract Class
-* @author   WooThemes
-*/
+ * Abstract WC Data Class
+ *
+ * Implemented by classes using the same CRUD(s) pattern.
+ *
+ * @version  2.6.0
+ * @package  WooCommerce/Abstracts
+ * @category Abstract Class
+ * @author   WooThemes
+ */
 abstract class WC_Data {
 
 	/**
@@ -237,7 +237,7 @@ abstract class WC_Data {
 			return;
 		}
 
-		if ( ! empty ( $this->_cache_group ) ) {
+		if ( ! empty( $this->_cache_group ) ) {
 			$cache_key   = WC_Cache_Helper::get_cache_prefix( $this->_cache_group ) . $this->get_id();
 			$cached_meta = wp_cache_get( $cache_key, $this->_cache_group );
 
@@ -267,7 +267,7 @@ abstract class WC_Data {
 				);
 			}
 
-			if ( ! empty ( $this->_cache_group ) ) {
+			if ( ! empty( $this->_cache_group ) ) {
 				wp_cache_set( $cache_key, $this->_meta_data, $this->_cache_group );
 			}
 		}
@@ -305,7 +305,7 @@ abstract class WC_Data {
 			delete_metadata_by_mid( $this->_meta_type, $meta_id );
 		}
 
-		if ( ! empty ( $this->_cache_group ) ) {
+		if ( ! empty( $this->_cache_group ) ) {
 			WC_Cache_Helper::incr_cache_prefix( $this->_cache_group );
 		}
 		$this->read_meta_data();

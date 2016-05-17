@@ -49,7 +49,6 @@ class WC_Customer {
 
 	/**
 	 * Constructor for the customer class loads the customer data.
-	 *
 	 */
 	public function __construct() {
 		$this->_data = (array) WC()->session->get( 'customer' );

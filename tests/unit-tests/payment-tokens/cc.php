@@ -85,7 +85,7 @@ class WC_Tests_Payment_Token_CC extends WC_Unit_Test_Case {
 		$this->assertEquals( '1111', $token->get_last4() );
 	}
 
-	/*
+	/**
 	 * Test reading/getting a token from DB correctly sets meta.
 	 * @since 2.6.0
 	 */

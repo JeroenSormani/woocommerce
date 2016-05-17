@@ -20,17 +20,17 @@ class WC_Payment_Token_CC extends WC_Payment_Token {
 	protected $type = 'CC';
 
  	/**
-	 * Validate credit card payment tokens.
-	 *
-	 * These fields are required by all credit card payment tokens:
-	 * expiry_month  - string Expiration date (MM) for the card
-	 * expiry_year   - string Expiration date (YYYY) for the card
-	 * last4         - string Last 4 digits of the card
-	 * card_type     - string Card type (visa, mastercard, etc)
-	 *
-	 * @since 2.6.0
-	 * @return boolean True if the passed data is valid
-	 */
+ 	 * Validate credit card payment tokens.
+ 	 *
+ 	 * These fields are required by all credit card payment tokens:
+ 	 * expiry_month  - string Expiration date (MM) for the card
+ 	 * expiry_year   - string Expiration date (YYYY) for the card
+ 	 * last4         - string Last 4 digits of the card
+ 	 * card_type     - string Card type (visa, mastercard, etc)
+ 	 *
+ 	 * @since 2.6.0
+ 	 * @return boolean True if the passed data is valid
+ 	 */
 	public function validate() {
 		if ( false === parent::validate() ) {
 			return false;

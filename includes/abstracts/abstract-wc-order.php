@@ -167,7 +167,7 @@ abstract class WC_Abstract_Order {
 		}
 
 		$token_ids = get_post_meta( $this->id, '_payment_tokens', true );
-		if ( empty ( $token_ids ) ) {
+		if ( empty( $token_ids ) ) {
 			$token_ids = array();
 		}
 		$token_ids[] = $token->get_id();

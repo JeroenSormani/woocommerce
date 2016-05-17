@@ -71,4 +71,4 @@ foreach ( $items as $item_id => $item ) :
 		</tr>
 	<?php endif; ?>
 
-<?php endforeach; ?>
+<?php endforeach;

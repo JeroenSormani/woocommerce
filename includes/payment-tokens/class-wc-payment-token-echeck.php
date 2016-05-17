@@ -21,14 +21,14 @@ class WC_Payment_Token_eCheck extends WC_Payment_Token {
 	protected $type = 'eCheck';
 
  	/**
-	 * Validate eCheck payment tokens.
-	 *
-	 * These fields are required by all eCheck payment tokens:
-	 * last4  - string Last 4 digits of the check
-	 *
-	 * @since 2.6.0
-	 * @return boolean True if the passed data is valid
-	 */
+ 	 * Validate eCheck payment tokens.
+ 	 *
+ 	 * These fields are required by all eCheck payment tokens:
+ 	 * last4  - string Last 4 digits of the check
+ 	 *
+ 	 * @since 2.6.0
+ 	 * @return boolean True if the passed data is valid
+ 	 */
 	public function validate() {
 		if ( false === parent::validate() ) {
 			return false;

@@ -91,7 +91,7 @@ class WC_Payment_Tokens {
 		}
 
 		$token_ids = get_post_meta( $order_id, '_payment_tokens', true );
-		if ( empty ( $token_ids ) ) {
+		if ( empty( $token_ids ) ) {
 			return array();
 		}
 
@@ -155,7 +155,7 @@ class WC_Payment_Tokens {
 	 */
 	public static function delete( $token_id ) {
 		$type = self::get_token_type_by_id( $token_id );
-		if ( ! empty ( $type ) ) {
+		if ( ! empty( $type ) ) {
 			$class = 'WC_Payment_Token_' . $type;
 			$token = new $class( $token_id );
 			$token->delete();

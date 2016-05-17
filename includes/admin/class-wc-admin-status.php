@@ -51,7 +51,7 @@ class WC_Admin_Status {
 				break;
 				case 'clear_expired_transients' :
 
-					/*
+					/**
 					 * Deletes all expired transients. The multi-table delete syntax is used.
 					 * to delete the transient record from table a, and the corresponding.
 					 * transient_timeout record from table b.
