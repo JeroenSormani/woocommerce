@@ -206,21 +206,21 @@ class WC_Shipping {
 	 * @return string
 	 */
 	private function get_default_method( $available_methods, $current_chosen_method = false ) {
-		if ( ! empty( $available_methods ) ) {
-			if ( ! empty( $current_chosen_method ) ) {
-				if ( isset( $available_methods[ $current_chosen_method ] ) ) {
-					return $available_methods[ $current_chosen_method ]->id;
-				} else {
-					foreach ( $available_methods as $method_key => $method ) {
-						if ( strpos( $method->id, $current_chosen_method ) === 0 ) {
-							return $method->id;
-						}
-					}
+		if ( empty( $available_methods ) ) {
+			return '';
+		}
+
+		if ( ! empty( $current_chosen_method ) && isset( $available_methods[ $current_chosen_method ] ) ) {
+			return $available_methods[ $current_chosen_method ]->id;
+		} else {
+			foreach ( $available_methods as $method_key => $method ) {
+				if ( strpos( $method->id, $current_chosen_method ) === 0 ) {
+					return $method->id;
 				}
 			}
-			return current( $available_methods )->id;
 		}
-		return '';
+
+		return current( $available_methods )->id;
 	}
 
 	/**
