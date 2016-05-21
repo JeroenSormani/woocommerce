@@ -223,6 +223,7 @@ final class WooCommerce {
 	 * Include required core files used in admin and on the frontend.
 	 */
 	public function includes() {
+		include_once( 'includes/libraries/class-wp-collection.php' );
 		include_once( 'includes/class-wc-autoloader.php' );
 		include_once( 'includes/wc-core-functions.php' );
 		include_once( 'includes/wc-widget-functions.php' );
@@ -528,3 +529,50 @@ function WC() {
 
 // Global for backwards compatibility.
 $GLOBALS['woocommerce'] = WC();
+
+return;
+add_action( 'woocommerce_init', function() {
+
+	// Test Jeroen
+	include_once( 'includes/libraries/class-wp-collection.php' );
+
+	$query = new WP_Query( array(
+		'post_type' => array( 'product', 'shop_order', 'review' ),
+		'post_status' => 'any',
+		'posts_per_page' => 100,
+	) );
+	$products = $query->get_posts();
+
+//	$products = [0,1,2,3,4,5,6,7,8,9];
+
+	$col = new WP_Collection( $products );
+
+
+	$where1 = array(
+		'post_status' => 'draft',
+		'ID' => 261566,
+	);
+	$where2 = array( 'ID' => 261566 );
+	$where3 = array(
+		array(
+			'ID' => 263142,
+			'post_type' => 'review',
+		),
+		array(
+			'ID' => 262573,
+		),
+	);
+//	print_r( $col->where( 'post_status', 'draft' )->order_by( 'post_date', 'DESC' )->get() );
+	print_r( $col->where( $where3 )->fields( 'ID' )->get() );
+//	print_r( $col->where_in( 'post_type', array( 'product', 'shop_order', 'review' ) )->fields( array( 'post_type', 'ID', 'post_date' ), 'post_date' )->get() );
+//	print_r( $col->where_in( array( 'post_status' => array( 'draft' ), 'post_title' => array( 'Variable product', 'Frappuchino' ) ) )->order_by( 'post_date', 'DESC' )->get() );
+//	print_r( $col->where( 'ID', 261566 )->order_by( 'post_date', 'DESC' )->get() );
+//	print_r( $col->fields( 'ID' )->first() );
+	// End test Jeroen
+die;
+	?><script>
+		console.log( JSON.parse( '<?php echo $col->where( $where3 )->order( 'DESC' )->order_by( 'post_date' )->limit( 3 )->to_json(); ?>' ) );
+	</script><?php
+	die;
+
+} );

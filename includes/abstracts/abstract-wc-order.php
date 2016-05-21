@@ -1201,18 +1201,22 @@ abstract class WC_Abstract_Order {
 			$type = array( $type );
 		}
 
-		$items          = array();
-		$get_items_sql  = $wpdb->prepare( "SELECT order_item_id, order_item_name, order_item_type FROM {$wpdb->prefix}woocommerce_order_items WHERE order_id = %d ", $this->id );
-		$get_items_sql .= "AND order_item_type IN ( '" . implode( "','", array_map( 'esc_sql', $type ) ) . "' ) ORDER BY order_item_id;";
-		$line_items     = $wpdb->get_results( $get_items_sql );
+		if ( ! isset( $this->items ) || ! $this->items instanceof WP_Collection ) {
+			$items = $wpdb->get_results( $wpdb->prepare( "SELECT order_item_id, order_item_name, order_item_type FROM {$wpdb->prefix}woocommerce_order_items WHERE order_id = %d ", $this->id ) );
+			$this->items = new WP_Collection( $items );
+		}
+
+		$items      = array();
+		$line_items = $this->items->where_in( 'order_item_type', $type )->get();
 
 		// Loop items
 		foreach ( $line_items as $item ) {
-			$items[ $item->order_item_id ]['name']            = $item->order_item_name;
-			$items[ $item->order_item_id ]['type']            = $item->order_item_type;
-			$items[ $item->order_item_id ]['item_meta']       = $this->get_item_meta( $item->order_item_id );
-			$items[ $item->order_item_id ]['item_meta_array'] = $this->get_item_meta_array( $item->order_item_id );
-			$items[ $item->order_item_id ]                    = $this->expand_item_meta( $items[ $item->order_item_id ] );
+			$id                              = $item->order_item_id;
+			$items[ $id ]['name']            = $item->order_item_name;
+			$items[ $id ]['type']            = $item->order_item_type;
+			$items[ $id ]['item_meta']       = $this->get_item_meta( $id );
+			$items[ $id ]['item_meta_array'] = $this->get_item_meta_array( $id );
+			$items[ $id ]                    = $this->expand_item_meta( $items[ $id ] );
 		}
 
 		return apply_filters( 'woocommerce_order_get_items', $items, $this );
