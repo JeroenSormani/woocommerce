@@ -109,6 +109,9 @@ class WC_Admin_Post_Types {
 			$user = wp_get_current_user();
 			update_user_option( $user->ID, 'manageedit-shop_ordercolumnshidden', array( 0 => 'billing_address' ), true );
 		}
+
+		// Performance
+		add_filter( 'the_posts', array( $this, 'pre_load_bought_products' ), 10, 2 );
 	}
 
 	/**
@@ -2306,6 +2309,54 @@ class WC_Admin_Post_Types {
 	public function disable_view_mode_options( $post_types ) {
 		unset( $post_types['product'], $post_types['shop_order'], $post_types['shop_coupon'] );
 		return $post_types;
+	}
+
+	/**
+	 * Pre load all bought products.
+	 *
+	 * Pre load all the bought products at once for performance reasons.
+	 * Now WP will load and cache al WP_Post objects, instead of loading the products one by one.
+	 *
+	 * @since 2.6
+	 *
+	 * @param array    $posts The array of retrieved posts.
+     * @param WP_Query $query The WP_Query instance (passed by reference).
+	 * @return mixed          The original posts list, untouched.
+	 */
+	public function pre_load_bought_products( $posts, $query ) {
+		global $wpdb;
+
+		if ( ! $query->is_main_query() || $query->query['post_type'] != 'shop_order' ) {
+			return $posts;
+		}
+
+		// Get the product/variation IDs
+		$order_ids = wp_list_pluck( $posts, 'ID' );
+		$order_id_list = implode( ',', array_map( 'absint', $order_ids ) );
+		$product_id_query = $wpdb->get_results( "
+			SELECT DISTINCT( oim.meta_value ) FROM wp_woocommerce_order_items as oi
+			INNER JOIN wp_woocommerce_order_itemmeta as oim ON oi.order_item_id = oim.order_item_id
+			WHERE
+				oi.order_id IN ({$order_id_list}) AND
+				oi.order_item_type = 'line_item' AND
+				oim.meta_key IN ('_product_id', '_variation_id') AND
+				oim.meta_value != 0
+		" );
+
+		// Get posts so they are cached in WP
+		$product_ids = wp_list_pluck( $product_id_query, 'meta_value' );
+		$post_query = new WP_Query( array(
+			'post__in'       => $product_ids,
+			'post_status'    => 'publish',
+			'post_type'      => 'product',
+			'found_posts'    => false,
+			'posts_per_page' => count( $product_ids ),
+//			'update_post_term_cache' => false,
+//			'update_post_meta_cache' => false,
+		) );
+		$post_query->get_posts();
+
+		return $posts;
 	}
 }
 
