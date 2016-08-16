@@ -530,14 +530,44 @@ function WC() {
 // Global for backwards compatibility.
 $GLOBALS['woocommerce'] = WC();
 
+//return;
+add_filter( 'the_posts', 'test_pre_load_orders', 10, 2 );
+function test_pre_load_orders( $posts, $query ) {
+	global $wpdb;
+
+	if ( ! $query->is_main_query() || get_query_var( 'post_type' ) != 'shop_order' ) {
+		return $posts;
+	}
+
+//	$order_ids = wp_list_pluck( $posts, 'ID' );
+	WC()->order_factory->set_bulk_orders( $posts );
+
+	return $posts;
+}
+
+return;
+add_action( 'admin_init', function() {
+
+	// Test Jeroen
+	include_once( 'includes/libraries/class-wp-collection.php' );
+
+	WC()->order_factory->set_bulk_orders( array( 263228 ) );
+	WC()->order_factory->get_order_from_bulk( 263228 );
+
+die;
+
+});
+
+
 return;
 add_action( 'woocommerce_init', function() {
 
 	// Test Jeroen
 	include_once( 'includes/libraries/class-wp-collection.php' );
 
+	global $wpdb;
 	$query = new WP_Query( array(
-		'post_type' => array( 'product', 'shop_order', 'review' ),
+		'post_type' => array( 'shop_order', 'review' ),
 		'post_status' => 'any',
 		'posts_per_page' => 100,
 	) );
@@ -545,25 +575,47 @@ add_action( 'woocommerce_init', function() {
 
 //	$products = [0,1,2,3,4,5,6,7,8,9];
 
+	// Posts
 	$col = new WP_Collection( $products );
+	$post_id_list = implode( ',', array_map( 'absint', $col->pluck( 'ID' )->get() ) );
+
+	// Postmeta
+	$postmeta = $wpdb->get_results( "SELECT post_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id IN ({$post_id_list})" );
+	$meta_col = new WP_Collection( $postmeta );
+	$meta_col = $meta_col->group_by( 'post_id' )->get();
+	foreach ( $meta_col as $k => $metas ) {
+		$meta_col[ $k ] = wp_list_pluck( $metas, 'meta_value', 'meta_key' );
+	}
+
+	// Order items
+	$order_items = $wpdb->get_results( "SELECT order_id, order_item_id, order_item_name, order_item_type FROM {$wpdb->prefix}woocommerce_order_items" );
+	$order_items_col = new WP_Collection( $order_items );
+
+	// Order item meta
+	$order_item_meta = $wpdb->get_results( "SELECT order_item_id, meta_key, meta_value FROM {$wpdb->prefix}woocommerce_order_itemmeta" );
+	$order_item_meta_col = new WP_Collection( $order_item_meta );
+	$order_item_meta_col = $order_item_meta_col->group_by( 'order_item_id' )->get();
+	// Because the values are already grouped by order item ID, we need to manually loop them
+	foreach ( $order_item_meta_col as $k => $metas ) {
+		$order_item_meta_col[ $k ] = wp_list_pluck( $metas, 'meta_value', 'meta_key' );
+	}
+	$order_items_col->add_relation( 'meta', $order_item_meta_col, true, 'order_item_id' );
+
+	$col->add_relation( 'meta', $meta_col, true, 'ID' );
+	$col->add_relation( 'order_items', $order_items_col, 'order_id', 'ID' );
+
+	print_r( $col->limit( 300 )->get() );
 
 
-	$where1 = array(
-		'post_status' => 'draft',
-		'ID' => 261566,
-	);
-	$where2 = array( 'ID' => 261566 );
-	$where3 = array(
-		array(
-			'ID' => 263142,
-			'post_type' => 'review',
-		),
-		array(
-			'ID' => 262573,
-		),
-	);
-//	print_r( $col->where( 'post_status', 'draft' )->order_by( 'post_date', 'DESC' )->get() );
-	print_r( $col->where( $where3 )->fields( 'ID' )->get() );
+//print_r( $post_id_list );
+//print_r( $meta_col->fields( 'post_id', 'meta_key', 'meta_value' )->get() );
+//print_r( $meta_col->limit( 3 )->get() );
+
+
+//	['post_status' => 'publish']
+//	print_r( $col->fields( 'post_title', 'post_status', 'post_type' )->limit( 5 )->group_by( 'post_status')->get() );
+//	print_r( $col->get_relation_data( 'meta' )->limit( 10 ) );
+
 //	print_r( $col->where_in( 'post_type', array( 'product', 'shop_order', 'review' ) )->fields( array( 'post_type', 'ID', 'post_date' ), 'post_date' )->get() );
 //	print_r( $col->where_in( array( 'post_status' => array( 'draft' ), 'post_title' => array( 'Variable product', 'Frappuchino' ) ) )->order_by( 'post_date', 'DESC' )->get() );
 //	print_r( $col->where( 'ID', 261566 )->order_by( 'post_date', 'DESC' )->get() );

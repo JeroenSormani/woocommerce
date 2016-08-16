@@ -1383,8 +1383,8 @@ abstract class WC_Abstract_Order {
 		global $wpdb;
 
 		return $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value, meta_id, order_item_id
-			FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id = %d
-			ORDER BY meta_id", absint( $order_item_id ) ), ARRAY_A );
+				FROM {$wpdb->prefix}woocommerce_order_itemmeta WHERE order_item_id = %d
+				ORDER BY meta_id", absint( $order_item_id ) ), ARRAY_A );
 	}
 
 	/**
@@ -1431,7 +1431,34 @@ abstract class WC_Abstract_Order {
 	 * @return array|string
 	 */
 	public function get_item_meta( $order_item_id, $key = '', $single = false ) {
-		return get_metadata( 'order_item', $order_item_id, $key, $single );
+		global $wpdb;
+
+		if ( ! isset( $this->order_item_meta ) || ! $this->order_item_meta instanceof WP_Collection ) {
+			$order_ids = $wpdb->get_results( $wpdb->prepare( "SELECT order_item_id FROM {$wpdb->prefix}woocommerce_order_items WHERE order_id = %d", $this->id ) );
+			$order_item_ids = implode( ',',	array_map( 'absint', wp_list_pluck( $order_ids, 'order_item_id' ) ) );
+
+			$order_item_meta = $wpdb->get_results( "
+				SELECT order_item_id, meta_key, meta_value
+				FROM wp_woocommerce_order_itemmeta
+				WHERE order_item_id IN ({$order_item_ids})
+				ORDER BY meta_id ASC"
+			);
+
+			$this->order_item_meta = new WP_Collection( $order_item_meta );
+		}
+
+		$return = null;
+		$order_item = $this->order_item_meta->where( 'order_item_id', $order_item_id );
+		if ( ! empty( $key ) ) {
+			$value  = $order_item->where_first( 'meta_key', $key )->index( 'meta_value' )->get();
+			$return = $single ? $value : array( $value );
+		} else {
+			$meta = $order_item->get();
+			foreach ( $meta as $k => $v ) {
+				$return[ $v->meta_key ] = array( $v->meta_value );
+			}
+		}
+		return $return;
 	}
 
 	/** Total Getters *******************************************************/
@@ -2692,6 +2719,39 @@ abstract class WC_Abstract_Order {
 		add_filter( 'comments_clauses', array( 'WC_Comments', 'exclude_order_comments' ) );
 
 		return $notes;
+	}
+
+	/**
+	 * Get order related comments (notes).
+	 *
+	 * @since 2.6.0
+	 *
+	 * @return array|int
+	 */
+	public function get_order_comments( $status = '' ) {
+		if ( isset( $this->comments ) && $this->comments instanceof WP_Collection ) {
+			if ( ! empty( $status ) ) {
+				return $this->comments->where( 'status', $status )->get();
+			}
+			return $this->comments->get();
+		}
+
+		$args  = array(
+			'post_id' => $this->id,
+			'approve' => 'approve',
+			'type'    => '',
+			'status'  => $status
+		);
+
+		remove_filter( 'comments_clauses', array( 'WC_Comments', 'exclude_order_comments' ) );
+
+		$comment_query = new WP_Comment_Query( $args );
+		$comments = $comment_query->get_comments();
+		$this->comments = new WP_Collection( $comments );
+
+		add_filter( 'comments_clauses', array( 'WC_Comments', 'exclude_order_comments' ) );
+
+		return $this->comments->get();
 	}
 
 	/**

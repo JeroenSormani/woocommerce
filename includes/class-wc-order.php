@@ -81,15 +81,18 @@ class WC_Order extends WC_Abstract_Order {
 	public function get_total_refunded() {
 		global $wpdb;
 
-		$total = $wpdb->get_var( $wpdb->prepare( "
-			SELECT SUM( postmeta.meta_value )
-			FROM $wpdb->postmeta AS postmeta
-			INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
-			WHERE postmeta.meta_key = '_refund_amount'
-			AND postmeta.post_id = posts.ID
-		", $this->id ) );
+		if ( ! isset( $this->total_refunded ) ) {
+			$total_refunded = $wpdb->get_var( $wpdb->prepare( "
+				SELECT SUM( postmeta.meta_value )
+				FROM $wpdb->postmeta AS postmeta
+				INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
+				WHERE postmeta.meta_key = '_refund_amount'
+				AND postmeta.post_id = posts.ID
+			", $this->id ) );
+			$this->total_refunded = max( 0, $total_refunded );
+		}
 
-		return $total;
+		return $this->total_refunded;
 	}
 
 	/**
@@ -101,16 +104,20 @@ class WC_Order extends WC_Abstract_Order {
 	public function get_total_tax_refunded() {
 		global $wpdb;
 
-		$total = $wpdb->get_var( $wpdb->prepare( "
-			SELECT SUM( order_itemmeta.meta_value )
-			FROM {$wpdb->prefix}woocommerce_order_itemmeta AS order_itemmeta
-			INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
-			INNER JOIN {$wpdb->prefix}woocommerce_order_items AS order_items ON ( order_items.order_id = posts.ID AND order_items.order_item_type = 'tax' )
-			WHERE order_itemmeta.order_item_id = order_items.order_item_id
-			AND order_itemmeta.meta_key IN ('tax_amount', 'shipping_tax_amount')
-		", $this->id ) );
+		if ( ! isset( $this->total_tax_refunded ) ) {
+			$total_tax_refunded = $wpdb->get_var( $wpdb->prepare( "
+				SELECT SUM( order_itemmeta.meta_value )
+				FROM {$wpdb->prefix}woocommerce_order_itemmeta AS order_itemmeta
+				INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
+				INNER JOIN {$wpdb->prefix}woocommerce_order_items AS order_items ON ( order_items.order_id = posts.ID AND order_items.order_item_type = 'tax' )
+				WHERE order_itemmeta.order_item_id = order_items.order_item_id
+				AND order_itemmeta.meta_key IN ('tax_amount', 'shipping_tax_amount')
+			", $this->id ) );
+			$this->total_tax_refunded = max( 0, $total_tax_refunded );
+		}
 
-		return abs( $total );
+
+		return abs( $this->total_tax_refunded );
 	}
 
 	/**
@@ -122,16 +129,19 @@ class WC_Order extends WC_Abstract_Order {
 	public function get_total_shipping_refunded() {
 		global $wpdb;
 
-		$total = $wpdb->get_var( $wpdb->prepare( "
-			SELECT SUM( order_itemmeta.meta_value )
-			FROM {$wpdb->prefix}woocommerce_order_itemmeta AS order_itemmeta
-			INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
-			INNER JOIN {$wpdb->prefix}woocommerce_order_items AS order_items ON ( order_items.order_id = posts.ID AND order_items.order_item_type = 'shipping' )
-			WHERE order_itemmeta.order_item_id = order_items.order_item_id
-			AND order_itemmeta.meta_key IN ('cost')
-		", $this->id ) );
+		if ( ! isset( $this->total_shipping_refunded ) ) {
+			$total_shipping_refunded = $wpdb->get_var( $wpdb->prepare( "
+				SELECT SUM( order_itemmeta.meta_value )
+				FROM {$wpdb->prefix}woocommerce_order_itemmeta AS order_itemmeta
+				INNER JOIN $wpdb->posts AS posts ON ( posts.post_type = 'shop_order_refund' AND posts.post_parent = %d )
+				INNER JOIN {$wpdb->prefix}woocommerce_order_items AS order_items ON ( order_items.order_id = posts.ID AND order_items.order_item_type = 'shipping' )
+				WHERE order_itemmeta.order_item_id = order_items.order_item_id
+				AND order_itemmeta.meta_key IN ('cost')
+			", $this->id ) );
+			$this->total_shipping_refunded = max( 0, $total_shipping_refunded );
+		}
 
-		return abs( $total );
+		return abs( $this->total_shipping_refunded );
 	}
 
 	/**

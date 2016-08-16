@@ -700,13 +700,8 @@ class WC_Admin_Post_Types {
 					// check the status of the post
 					$status = ( 'trash' !== $post->post_status ) ? '' : 'post-trashed';
 
-					$latest_notes = get_comments( array(
-						'post_id'   => $post->ID,
-						'number'    => 1,
-						'status'    => $status
-					) );
-
-					$latest_note = current( $latest_notes );
+					$latest_notes = $the_order->get_order_comments( $status );
+					$latest_note = reset( $latest_notes );
 
 					if ( isset( $latest_note->comment_content ) && $post->comment_count == 1 ) {
 						echo '<span class="note-on tips" data-tip="' . wc_sanitize_tooltip( $latest_note->comment_content ) . '">' . __( 'Yes', 'woocommerce' ) . '</span>';
@@ -2326,7 +2321,7 @@ class WC_Admin_Post_Types {
 	public function pre_load_bought_products( $posts, $query ) {
 		global $wpdb;
 
-		if ( ! $query->is_main_query() || $query->query['post_type'] != 'shop_order' ) {
+		if ( ! $query->is_main_query() || get_query_var( 'post_type' ) != 'shop_order' ) {
 			return $posts;
 		}
 

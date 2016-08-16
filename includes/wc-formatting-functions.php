@@ -275,7 +275,7 @@ function wc_sanitize_tooltip( $var ) {
 		'em'     => array(),
 		'strong' => array(),
 		'small'  => array(),
-		'span'   => array(),
+		'span'   => array( 'class' ),
 		'ul'     => array(),
 		'li'     => array(),
 		'ol'     => array(),
