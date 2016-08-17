@@ -320,9 +320,9 @@ class WC_Coupon extends WC_Legacy_Coupon {
 		$coupon_id = wp_cache_get( WC_Cache_Helper::get_cache_prefix( 'coupons' ) . 'coupon_id_from_code_' . $code, 'coupons' );
 
 		if ( false === $coupon_id ) {
-			$sql = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_date DESC LIMIT 1;", $this->get_code() );
+			$coupon_found = wc_get_coupon_by_code( $this->get_code() );
 
-			if ( $coupon_id = apply_filters( 'woocommerce_get_coupon_id_from_code', $wpdb->get_var( $sql ), $this->get_code() ) ) {
+			if ( $coupon_found && $coupon_id = apply_filters( 'woocommerce_get_coupon_id_from_code', $coupon_found->ID, $this->get_code() ) ) {
 				wp_cache_set( WC_Cache_Helper::get_cache_prefix( 'coupons' ) . 'coupon_id_from_code_' . $code, $coupon_id, 'coupons' );
 			}
 		}
@@ -742,7 +742,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	}
 
 	/**
-	 * Developers can programically return coupons. This function will read those values into our WC_Coupon class.
+	 * Developers can pragmatically return coupons. This function will read those values into our WC_Coupon class.
 	 * @since  2.7.0
 	 * @param  string $code  Coupon code
 	 * @param  array $coupon Array of coupon properties
@@ -1014,7 +1014,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	}
 
 	/**
-	 * Cart discounts cannot be added if non-eligble product is found in cart.
+	 * Cart discounts cannot be added if non-eligible product is found in cart.
 	 */
 	private function validate_cart_excluded_items() {
 		if ( ! $this->is_type( wc_get_product_coupon_types() ) ) {
@@ -1214,7 +1214,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	 * Map one of the WC_Coupon message codes to a message string.
 	 *
 	 * @param integer $msg_code
-	 * @return string| Message/error string
+	 * @return string Message/error string
 	 */
 	public function get_coupon_message( $msg_code ) {
 		switch ( $msg_code ) {
@@ -1235,7 +1235,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	 * Map one of the WC_Coupon error codes to a message string.
 	 *
 	 * @param int $err_code Message/error code.
-	 * @return string| Message/error string
+	 * @return string Message/error string
 	 */
 	public function get_coupon_error( $err_code ) {
 		switch ( $err_code ) {
@@ -1320,7 +1320,7 @@ class WC_Coupon extends WC_Legacy_Coupon {
 	 * so this static method exists.
 	 *
 	 * @param int $err_code Error code
-	 * @return string| Error string
+	 * @return string Error string
 	 */
 	public static function get_generic_coupon_error( $err_code ) {
 		switch ( $err_code ) {

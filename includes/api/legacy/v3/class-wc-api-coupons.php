@@ -186,13 +186,11 @@ class WC_API_Coupons extends WC_API_Resource {
 		global $wpdb;
 
 		try {
-			$id = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM $wpdb->posts WHERE post_title = %s AND post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_date DESC LIMIT 1;", $code ) );
-
-			if ( is_null( $id ) ) {
+			if ( ! $coupon = wc_get_coupon_by_code( $code ) ) {
 				throw new WC_API_Exception( 'woocommerce_api_invalid_coupon_code', __( 'Invalid coupon code', 'woocommerce' ), 404 );
 			}
 
-			return $this->get_coupon( $id, $fields );
+			return $this->get_coupon( $coupon->ID, $fields );
 		} catch ( WC_API_Exception $e ) {
 			return new WP_Error( $e->getErrorCode(), $e->getMessage(), array( 'status' => $e->getCode() ) );
 		}
@@ -230,13 +228,7 @@ class WC_API_Coupons extends WC_API_Resource {
 			$coupon_code = apply_filters( 'woocommerce_coupon_code', $data['code'] );
 
 			// Check for duplicate coupon codes
-			$coupon_found = $wpdb->get_var( $wpdb->prepare( "
-				SELECT $wpdb->posts.ID
-				FROM $wpdb->posts
-				WHERE $wpdb->posts.post_type = 'shop_coupon'
-				AND $wpdb->posts.post_status = 'publish'
-				AND $wpdb->posts.post_title = '%s'
-			 ", $coupon_code ) );
+			$coupon_found = wc_get_coupon_by_code( $coupon_code );
 
 			if ( $coupon_found ) {
 				throw new WC_API_Exception( 'woocommerce_api_coupon_code_already_exists', __( 'The coupon code already exists', 'woocommerce' ), 400 );
@@ -345,16 +337,9 @@ class WC_API_Coupons extends WC_API_Resource {
 				$coupon_code = apply_filters( 'woocommerce_coupon_code', $data['code'] );
 
 				// Check for duplicate coupon codes
-				$coupon_found = $wpdb->get_var( $wpdb->prepare( "
-					SELECT $wpdb->posts.ID
-					FROM $wpdb->posts
-					WHERE $wpdb->posts.post_type = 'shop_coupon'
-					AND $wpdb->posts.post_status = 'publish'
-					AND $wpdb->posts.post_title = '%s'
-					AND $wpdb->posts.ID != %s
-				 ", $coupon_code, $id ) );
+				$coupon_found = wc_get_coupon_by_code( $coupon_code );
 
-				if ( $coupon_found ) {
+				if ( $coupon_found && $coupon_found->ID != $id ) {
 					throw new WC_API_Exception( 'woocommerce_api_coupon_code_already_exists', __( 'The coupon code already exists', 'woocommerce' ), 400 );
 				}
 

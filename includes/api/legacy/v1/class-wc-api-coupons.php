@@ -166,12 +166,10 @@ class WC_API_Coupons extends WC_API_Resource {
 	public function get_coupon_by_code( $code, $fields = null ) {
 		global $wpdb;
 
-		$id = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM $wpdb->posts WHERE post_title = %s AND post_type = 'shop_coupon' AND post_status = 'publish' ORDER BY post_date DESC LIMIT 1;", $code ) );
-
-		if ( is_null( $id ) )
+		if ( ! $coupon = wc_get_coupon_by_code( $code ) )
 			return new WP_Error( 'woocommerce_api_invalid_coupon_code', __( 'Invalid coupon code', 'woocommerce' ), array( 'status' => 404 ) );
 
-		return $this->get_coupon( $id, $fields );
+		return $this->get_coupon( $coupon->ID, $fields );
 	}
 
 	/**

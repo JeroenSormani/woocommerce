@@ -223,16 +223,9 @@ class WC_Meta_Box_Coupon_Data {
 		$wpdb->update( $wpdb->posts, array( 'post_title' => $post->post_title ), array( 'ID' => $post_id ) );
 
 		// Check for dupe coupons
-		$coupon_found = $wpdb->get_var( $wpdb->prepare( "
-			SELECT $wpdb->posts.ID
-			FROM $wpdb->posts
-			WHERE $wpdb->posts.post_type = 'shop_coupon'
-			AND $wpdb->posts.post_status = 'publish'
-			AND $wpdb->posts.post_title = '%s'
-			AND $wpdb->posts.ID != %s
-		 ", $post->post_title, $post_id ) );
+		$coupon_found = wc_get_coupon_by_code( $post->post_title );
 
-		if ( $coupon_found ) {
+		if ( $coupon_found && $coupon_found->ID != $post_id ) {
 			WC_Admin_Meta_Boxes::add_error( __( 'Coupon code already exists - customers will use the latest coupon with this code.', 'woocommerce' ) );
 		}
 

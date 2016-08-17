@@ -66,13 +66,7 @@ class WC_CLI_Coupon extends WC_CLI_Command {
 			$coupon_code = apply_filters( 'woocommerce_coupon_code', $assoc_args['code'] );
 
 			// Check for duplicate coupon codes.
-			$coupon_found = $wpdb->get_var( $wpdb->prepare( "
-				SELECT $wpdb->posts.ID
-				FROM $wpdb->posts
-				WHERE $wpdb->posts.post_type = 'shop_coupon'
-				AND $wpdb->posts.post_status = 'publish'
-				AND $wpdb->posts.post_title = '%s'
-			 ", $coupon_code ) );
+			$coupon_found = wc_get_coupon_by_code( $coupon_code );
 
 			if ( $coupon_found ) {
 				throw new WC_CLI_Exception( 'woocommerce_cli_coupon_code_already_exists', __( 'The coupon code already exists', 'woocommerce' ) );
@@ -440,16 +434,9 @@ class WC_CLI_Coupon extends WC_CLI_Command {
 				$coupon_code = apply_filters( 'woocommerce_coupon_code', $data['code'] );
 
 				// Check for duplicate coupon codes
-				$coupon_found = $wpdb->get_var( $wpdb->prepare( "
-					SELECT $wpdb->posts.ID
-					FROM $wpdb->posts
-					WHERE $wpdb->posts.post_type = 'shop_coupon'
-					AND $wpdb->posts.post_status = 'publish'
-					AND $wpdb->posts.post_title = '%s'
-					AND $wpdb->posts.ID != %s
-				 ", $coupon_code, $id ) );
+				$coupon_found = wc_get_coupon_by_code( $coupon_code );
 
-				if ( $coupon_found ) {
+				if ( $coupon_found && $coupon_found->ID != $id ) {
 					throw new WC_CLI_Exception( 'woocommerce_cli_coupon_code_already_exists', __( 'The coupon code already exists', 'woocommerce' ) );
 				}
 			}

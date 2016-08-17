@@ -128,7 +128,8 @@ if ( wc_tax_enabled() ) {
 				<ul class="wc_coupon_list"><?php
 					echo '<li><strong>' . __( 'Coupon(s)', 'woocommerce' ) . '</strong></li>';
 					foreach ( $coupons as $item_id => $item ) {
-						$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_type = 'shop_coupon' AND post_status = 'publish' LIMIT 1;", $item->get_code() ) );
+						$coupon  = wc_get_coupon_by_code( $item->get_code() );
+						$post_id = $coupon->ID;
 						$link    = $post_id ? add_query_arg( array( 'post' => $post_id, 'action' => 'edit' ), admin_url( 'post.php' ) ) : add_query_arg( array( 's' => $item->get_code(), 'post_status' => 'all', 'post_type' => 'shop_coupon' ), admin_url( 'edit.php' ) );
 
 						echo '<li class="code"><a href="' . esc_url( $link ) . '" class="tips" data-tip="' . esc_attr( wc_price( $item->get_discount(), array( 'currency' => $order->get_currency() ) ) ) . '"><span>' . esc_html( $item->get_code() ). '</span></a></li>';
