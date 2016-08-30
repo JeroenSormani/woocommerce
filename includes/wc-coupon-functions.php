@@ -70,3 +70,35 @@ function wc_get_cart_coupon_types() {
 function wc_coupons_enabled() {
 	return apply_filters( 'woocommerce_coupons_enabled', 'yes' === get_option( 'woocommerce_enable_coupons' ) );
 }
+
+/**
+ * Get coupon by code.
+ *
+ * Get the coupon by the coupon code.
+ *
+ * @since 2.7.0
+ *
+ * @param  string       $coupon_code Code that is used as coupon code.
+ * @return WP_Post|bool              WP_Post object if coupon is found, false otherwise.
+ */
+function wc_get_coupon_by_code( $coupon_code ) {
+
+	global $wpdb;
+
+	$coupon_id = apply_filters( 'woocommerce_get_coupon_id_from_code', $wpdb->get_var( $wpdb->prepare( "
+		SELECT ID
+		FROM $wpdb->posts
+		WHERE post_title = %s
+		AND post_type = 'shop_coupon'
+		AND post_status = 'publish'
+		ORDER BY post_date DESC
+		LIMIT 1
+	", $coupon_code ) ) );
+
+	if ( $coupon_id ) {
+		return new WC_Coupon( $coupon_id );
+	}
+
+	return false;
+
+}
