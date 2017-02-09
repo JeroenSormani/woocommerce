@@ -82,7 +82,7 @@ class WC_Shipping_Zones {
 	/**
 	 * Get shipping zone using it's ID
 	 * @since 2.6.0
-	 * @return WC_Shipping_Meethod|bool
+	 * @return WC_Shipping_Method|bool
 	 */
 	public static function get_shipping_method( $instance_id ) {
 		global $wpdb;
