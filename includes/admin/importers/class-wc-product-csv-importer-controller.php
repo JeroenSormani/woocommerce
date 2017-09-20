@@ -264,7 +264,7 @@ class WC_Product_CSV_Importer_Controller {
 			// Save the data.
 			$id = wp_insert_attachment( $object, $upload['file'] );
 
-			/*
+			/**
 			 * Schedule a cleanup for one day from now in case of failed
 			 * import or missing wp_import_cleanup() call.
 			 */
