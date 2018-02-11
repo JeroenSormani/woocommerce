@@ -32,4 +32,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endforeach; ?>
 		</ul>
 	</div>
-<?php endif; ?>
+<?php endif;
