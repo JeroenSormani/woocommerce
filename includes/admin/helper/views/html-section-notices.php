@@ -4,4 +4,4 @@
 	<div class="notice <?php echo sanitize_html_class( $notice['type'] ); ?>">
 		<?php echo wpautop( $notice['message'] ); ?>
 	</div>
-<?php endforeach; ?>
+<?php endforeach;
