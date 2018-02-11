@@ -49,4 +49,4 @@ if ( $downloads = WC()->customer->get_downloadable_products() ) : ?>
 
 	<?php do_action( 'woocommerce_after_available_downloads' ); ?>
 
-<?php endif; ?>
+<?php endif;
