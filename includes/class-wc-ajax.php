@@ -1580,7 +1580,7 @@ class WC_AJAX {
 			 * When a single product has gotten it's ordering updated.
 			 * $id The product ID
 			 * $index The new menu order
-			*/
+			 */
 			do_action( 'woocommerce_after_single_product_ordering', $id, $index );
 		}
 
