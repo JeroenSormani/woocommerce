@@ -335,10 +335,10 @@ class WC_REST_Payment_Gateways_Controller extends WC_REST_Controller {
 	}
 
     /**
-	 * Get the payment gateway schema, conforming to JSON Schema.
-	 *
-	 * @return array
-	 */
+     * Get the payment gateway schema, conforming to JSON Schema.
+     *
+     * @return array
+     */
 	public function get_item_schema() {
 		$schema = array(
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
