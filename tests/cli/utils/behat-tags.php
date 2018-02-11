@@ -12,7 +12,6 @@
  *   BEHAT_TAGS=$(php behat-tags.php)
  *   vendor/bin/behat --format progress $BEHAT_TAGS
  */
-
 function version_tags( $prefix, $current, $operator = '<' ) {
 	if ( ! $current )
 		return;
