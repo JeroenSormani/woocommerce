@@ -938,10 +938,10 @@ function wc_get_price_including_tax( $product, $args = array() ) {
 				$return_price = round( $line_price - $remove_tax, wc_get_price_decimals() );
 
 				/**
-			 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
-			 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
-			 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
-			 */
+				 * The woocommerce_adjust_non_base_location_prices filter can stop base taxes being taken off when dealing with out of base locations.
+				 * e.g. If a product costs 10 including tax, all users will pay 10 regardless of location and taxes.
+				 * This feature is experimental @since 2.4.7 and may change in the future. Use at your risk.
+				 */
 			} elseif ( $tax_rates !== $base_tax_rates && apply_filters( 'woocommerce_adjust_non_base_location_prices', true ) ) {
 				$base_taxes   = WC_Tax::calc_tax( $line_price, $base_tax_rates, true );
 				$modded_taxes = WC_Tax::calc_tax( $line_price - array_sum( $base_taxes ), $tax_rates, false );
