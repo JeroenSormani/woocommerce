@@ -261,7 +261,7 @@ class WC_REST_Setting_Options_Controller extends WC_REST_Controller {
 		// Get the request params.
 		$items = array_filter( $request->get_params() );
 
-		/*
+		/**
 		 * Since our batch settings update is group-specific and matches based on the route,
 		 * we inject the URL parameters (containing group) into the batch items
 		 */

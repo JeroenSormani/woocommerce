@@ -157,7 +157,6 @@ class WC_Emails {
 
 	/**
 	 * Constructor for the email class hooks in all emails that can be sent.
-	 *
 	 */
 	public function __construct() {
 		$this->init();
@@ -570,7 +569,7 @@ class WC_Emails {
 
 		$subject = sprintf( '[%s] %s', $this->get_blogname(), __( 'Product backorder', 'woocommerce' ) );
 		$message = sprintf( __( '%1$s units of %2$s have been backordered in order #%3$s.', 'woocommerce' ), $args['quantity'], html_entity_decode( strip_tags( $args['product']->get_formatted_name() ), ENT_QUOTES, get_bloginfo( 'charset' ) ), $order->get_order_number() );
-		
+
 		wp_mail(
 			apply_filters( 'woocommerce_email_recipient_backorder', get_option( 'woocommerce_stock_email_recipient' ), $args ),
 			apply_filters( 'woocommerce_email_subject_backorder', $subject, $args ),

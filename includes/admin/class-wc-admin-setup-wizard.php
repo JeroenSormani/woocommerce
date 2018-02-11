@@ -930,7 +930,7 @@ class WC_Admin_Setup_Wizard {
 			$this->install_woocommerce_services();
 		}
 
-		/*
+		/**
 		 * If enabled, create a shipping zone containing the country the
 		 * store is located in, with the selected method preconfigured.
 		 */

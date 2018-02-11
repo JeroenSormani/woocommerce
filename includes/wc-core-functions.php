@@ -1739,7 +1739,7 @@ function wc_list_pluck( $list, $callback_or_field, $index_key = null ) {
 		return wp_list_pluck( $list, $callback_or_field, $index_key );
 	}
 	if ( ! $index_key ) {
-		/*
+		/**
 		 * This is simple. Could at some point wrap array_column()
 		 * if we knew we had an array of arrays.
 		 */
@@ -1749,7 +1749,7 @@ function wc_list_pluck( $list, $callback_or_field, $index_key = null ) {
 		return $list;
 	}
 
-	/*
+	/**
 	 * When index_key is not set for a particular item, push the value
 	 * to the end of the stack. This is how array_column() behaves.
 	 */

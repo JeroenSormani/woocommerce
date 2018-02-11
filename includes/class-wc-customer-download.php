@@ -308,7 +308,7 @@ WHERE permission_id = %d",
 			$this->get_id()
 		);
 		$wpdb->query( $query );
-		
+
 		// Re-read this download from the data store to pull updated counts.
 		$this->data_store->read( $this );
 
