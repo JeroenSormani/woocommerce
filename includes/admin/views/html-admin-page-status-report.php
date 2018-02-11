@@ -743,4 +743,4 @@ $untested_plugins = $plugin_updates->get_untested_plugins( WC()->version, 'minor
 	</tbody>
 </table>
 
-<?php do_action( 'woocommerce_system_status_report' ); ?>
+<?php do_action( 'woocommerce_system_status_report' );
