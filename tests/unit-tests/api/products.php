@@ -434,7 +434,7 @@ class Products_API extends WC_REST_Unit_Test_Case {
 		$product_2->delete( true );
 	}
 
-	/*
+	/**
 	 * Tests to make sure you can filter products post statuses by both
 	 * the status query arg and WP_Query.
 	 *
