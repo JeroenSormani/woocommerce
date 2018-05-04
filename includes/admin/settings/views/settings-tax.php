@@ -90,7 +90,6 @@ $settings = array(
 			'incl' => __( 'Including tax', 'woocommerce' ),
 			'excl' => __( 'Excluding tax', 'woocommerce' ),
 		),
-		'autoload' => false,
 	),
 
 	array(
