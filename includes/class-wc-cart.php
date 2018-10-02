@@ -1218,7 +1218,7 @@ class WC_Cart extends WC_Legacy_Cart {
 		return apply_filters( 'woocommerce_cart_needs_payment', 0 < $this->get_total( 'edit' ), $this );
 	}
 
-	/*
+	/**
 	 * Shipping related functions.
 	 */
 
