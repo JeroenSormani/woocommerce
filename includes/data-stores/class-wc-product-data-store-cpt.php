@@ -81,6 +81,27 @@ class WC_Product_Data_Store_CPT extends WC_Data_Store_WP implements WC_Object_Da
 	 */
 	protected $updated_props = array();
 
+	/**
+	 * Get and store terms from a taxonomy.
+	 *
+	 * @since  3.5.4
+	 * @param  WC_Data|integer $object WC_Data object or object ID.
+	 * @param  string          $taxonomy Taxonomy name e.g. product_cat.
+	 * @return array of terms
+	 */
+	protected function get_term_ids( $object, $taxonomy ) {
+		if ( is_numeric( $object ) ) {
+			$object_id = $object;
+		} else {
+			$object_id = $object->get_id();
+		}
+		$terms = wc_get_product_terms( $object_id, $taxonomy );
+		if ( false === $terms || is_wp_error( $terms ) ) {
+			return array();
+		}
+		return wp_list_pluck( $terms, 'term_id' );
+	}
+
 	/*
 	|--------------------------------------------------------------------------
 	| CRUD Methods
@@ -166,6 +187,10 @@ class WC_Product_Data_Store_CPT extends WC_Data_Store_WP implements WC_Object_Da
 				'reviews_allowed'   => 'open' === $post_object->comment_status,
 			)
 		);
+
+		// Update caches
+		_wc_update_product_term_cache( $product->get_id() );
+		update_object_term_cache( $product->get_id(), 'product' );
 
 		$this->read_attributes( $product );
 		$this->read_downloads( $product );
@@ -389,7 +414,7 @@ class WC_Product_Data_Store_CPT extends WC_Data_Store_WP implements WC_Object_Da
 	 * @since 3.0.0
 	 */
 	protected function read_visibility( &$product ) {
-		$terms           = get_the_terms( $product->get_id(), 'product_visibility' );
+		$terms           = wc_get_product_terms( $product->get_id(), 'product_visibility' );
 		$term_names      = is_array( $terms ) ? wp_list_pluck( $terms, 'name' ) : array();
 		$featured        = in_array( 'featured', $term_names, true );
 		$exclude_search  = in_array( 'exclude-from-search', $term_names, true );
@@ -1501,7 +1526,7 @@ class WC_Product_Data_Store_CPT extends WC_Data_Store_WP implements WC_Object_Da
 		if ( 'product_variation' === $post_type ) {
 			return 'variation';
 		} elseif ( 'product' === $post_type ) {
-			$terms = get_the_terms( $product_id, 'product_type' );
+			$terms = wc_get_product_terms( $product_id, 'product_type' );
 			return ! empty( $terms ) ? sanitize_title( current( $terms )->name ) : 'simple';
 		} else {
 			return false;

@@ -102,8 +102,8 @@ class WC_AJAX {
 			'get_order_details'                                => false,
 			'add_attribute'                                    => false,
 			'add_new_attribute'                                => false,
-			'remove_variation'                                 => false,
 			'remove_variations'                                => false,
+			'remove_variation'                                 => false,
 			'save_attributes'                                  => false,
 			'add_variation'                                    => false,
 			'link_all_variations'                              => false,
@@ -482,8 +482,8 @@ class WC_AJAX {
 	public static function mark_order_status() {
 		if ( current_user_can( 'edit_shop_orders' ) && check_admin_referer( 'woocommerce-mark-order-status' ) ) {
 			$status = sanitize_text_field( $_GET['status'] );
-			$order  = wc_get_order( absint( $_GET['order_id'] ) );
 
+			$order  = wc_get_order( absint( $_GET['order_id'] ) );
 			if ( wc_is_order_status( 'wc-' . $status ) && $order ) {
 				// Initialize payment gateways in case order has hooked status transition actions.
 				wc()->payment_gateways();

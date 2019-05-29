@@ -48,14 +48,76 @@ function _wc_get_cached_product_terms( $product_id, $taxonomy, $args = array() )
 	$terms       = wp_cache_get( $cache_key, $cache_group );
 
 	if ( false !== $terms ) {
-		return $terms;
+		return array_map( 'get_term', $terms );
 	}
 
 	$terms = wp_get_post_terms( $product_id, $taxonomy, $args );
 
-	wp_cache_add( $cache_key, $terms, $cache_group );
+	_wc_update_product_term_cache( $product_id, array(), $args ); // Not passing $taxonomy to cache all at once
 
-	return $terms;
+	return _wc_get_cached_product_terms( $product_id, $taxonomy, $args );
+}
+
+/**
+ * Update term cache for products.
+ *
+ * Caches will only be updated for terms not already cached.
+ * Function inspired by WP Core update_object_term_cache()
+ *
+ * @since 3.5.4
+ *
+ * @param string|array $object_ids Comma-separated list or array of term object IDs.
+ * @param array|string $taxonomies The taxonomies or taxonomy to update the cache for. Leave empty to update all product taxonomies.
+ * @param array        $args       List of arguments to use in the cache key.
+ * @return void
+ */
+function _wc_update_product_term_cache( $object_ids, $taxonomies = array(), $args = array() ) {
+	$taxonomies = (array) $taxonomies;
+	$object_ids = (array) $object_ids;
+
+	if ( empty( $taxonomies ) ) {
+		$taxonomies = get_object_taxonomies( 'product' );
+	}
+
+	// Filter objects that don't have all the taxonomies cached yet.
+	$ids = [];
+	foreach ( (array) $object_ids as $id ) {
+		foreach ( $taxonomies as $taxonomy ) {
+			$cache_key   = 'wc_' . $taxonomy . md5( wp_json_encode( $args ) );
+			$cache_group = WC_Cache_Helper::get_cache_prefix( 'product_' . $id ) . $id;
+			if ( false === wp_cache_get( $cache_key, $cache_group ) ) {
+				$ids[] = $id;
+				break;
+			}
+		}
+	}
+
+	$terms = wp_get_object_terms( $ids, $taxonomies, array(
+		'fields' => 'all_with_object_id',
+		'orderby' => 'name',
+		'update_term_meta_cache' => false,
+		'hide_empty' => false,
+	) );
+
+	$object_terms = array();
+	foreach ( (array) $object_ids as $id ) {
+		foreach ( $taxonomies as $taxonomy ) {
+			$object_terms[ $id ][ $taxonomy ] = array();
+		}
+	}
+
+	foreach ( (array) $terms as $term ) {
+		$object_terms[ $term->object_id ][ $term->taxonomy ][] = $term->term_id;
+	}
+
+	// Update caches
+	foreach ( $object_terms as $id => $value ) {
+		foreach ( $value as $taxonomy => $terms ) {
+			$cache_key   = 'wc_' . $taxonomy . md5( wp_json_encode( $args ) );
+			$cache_group = WC_Cache_Helper::get_cache_prefix( 'product_' . $id ) . $id;
+			wp_cache_add( $cache_key, $terms, $cache_group );
+		}
+	}
 }
 
 /**

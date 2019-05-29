@@ -646,7 +646,6 @@ abstract class WC_Abstract_Order extends WC_Abstract_Legacy_Order {
 	 * @param string $deprecated Function used to set different totals based on this.
 	 *
 	 * @return bool|void
-	 * @throws WC_Data_Exception Exception may be thrown if value is invalid.
 	 */
 	public function set_total( $value, $deprecated = '' ) {
 		if ( $deprecated ) {
